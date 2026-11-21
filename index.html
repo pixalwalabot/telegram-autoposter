@@ -161,7 +161,6 @@
     }
     html.dark #saveConfigBtn:hover,
     html.dark #toggleTokenVisBtn:hover,
-    html.dark #downloadPyBtn:hover,
     html.dark #resetQueueStatusBtn:hover {
       background-color: #334155 !important;
     }
@@ -210,7 +209,7 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Telegram HD Auto-Poster</h1>
-          <p class="text-xs text-slate-500">Photos, Auto Messages, Links aur YouTube New Video Auto-Post</p>
+          <p class="text-xs text-slate-500">HD Photos, Auto Messages, Links aur YouTube New Video Auto-Post</p>
         </div>
       </div>
 
@@ -533,11 +532,6 @@
             <input id="loopCheckbox" type="checkbox" class="w-4 h-4 accent-sky-600 rounded" />
           </label>
 
-          <div class="pt-2 border-t border-slate-100">
-            <button id="downloadPyBtn" type="button" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">
-              Download Ready Python Script (.py)
-            </button>
-          </div>
         </section>
       </div>
 
@@ -865,7 +859,6 @@
         masterBtnIcon: document.getElementById('masterBtnIcon'),
         startBtnLabel: document.getElementById('startBtnLabel'),
         testOneBtn: document.getElementById('testOneBtn'),
-        downloadPyBtn: document.getElementById('downloadPyBtn'),
 
         ytChannelInput: document.getElementById('ytChannelInput'),
         ytIntervalInput: document.getElementById('ytIntervalInput'),
@@ -2190,81 +2183,6 @@
         addLog('YouTube Auto-Watch band kar diya gaya.', 'warn');
       }
 
-      // ===================== DOWNLOAD READY PYTHON SCRIPT =====================
-      function downloadPythonScript() {
-        const channel = el.channelIdInput.value.trim() || '@your_channel_username';
-        const interval = getIntervalSeconds();
-        const mode = getSendMode();
-        const caption = (el.defaultCaptionInput.value || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
-        const btnText = (el.btnTextInput.value || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-        const btnUrl = (el.btnUrlInput.value || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-        const loopFlag = el.loopCheckbox.checked ? 'True' : 'False';
-
-        const pyCode = `import json, os, time
-from pathlib import Path
-import requests
-
-BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
-CHANNEL_ID = "${channel}"
-INTERVAL_SECONDS = ${interval}
-SEND_MODE = "${mode}"  # "document", "photo", or "both"
-DEFAULT_CAPTION = "${caption}"
-BUTTON_TEXT = "${btnText}"
-BUTTON_URL = "${btnUrl}"
-LOOP_FOREVER = ${loopFlag}
-PHOTOS_FOLDER = Path("photos")
-POSTED_LOG = Path("posted_log.txt")
-EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".tiff", ".heic"}
-
-def send_file(path: Path):
-    modes = ["photo", "document"] if SEND_MODE == "both" else [SEND_MODE]
-    for m in modes:
-        ep = "sendDocument" if m == "document" else "sendPhoto"
-        field = "document" if m == "document" else "photo"
-        data = {"chat_id": CHANNEL_ID}
-        if DEFAULT_CAPTION and (SEND_MODE != "both" or m == "photo"):
-            data["caption"] = DEFAULT_CAPTION[:1024]
-        if BUTTON_URL and (SEND_MODE != "both" or m == "document"):
-            data["reply_markup"] = json.dumps({"inline_keyboard": [[{"text": BUTTON_TEXT or "Open Link", "url": BUTTON_URL}]]})
-        with path.open("rb") as f:
-            r = requests.post(f"https://api.telegram.org/bot{BOT_TOKEN}/{ep}", data=data, files={field: (path.name, f)}, timeout=120).json()
-            if not r.get("ok"):
-                raise RuntimeError(r)
-
-PHOTOS_FOLDER.mkdir(exist_ok=True)
-while True:
-    posted = set(POSTED_LOG.read_text().splitlines()) if POSTED_LOG.exists() else set()
-    files = [p for p in sorted(PHOTOS_FOLDER.iterdir()) if p.is_file() and p.suffix.lower() in EXTS and p.name not in posted]
-    if not files:
-        if LOOP_FOREVER and POSTED_LOG.exists():
-            POSTED_LOG.unlink()
-            continue
-        print("Waiting for new photos in 'photos/' folder...")
-        time.sleep(INTERVAL_SECONDS)
-        continue
-    for p in files:
-        try:
-            print(f"Posting {p.name}...")
-            send_file(p)
-            with POSTED_LOG.open("a") as logf:
-                logf.write(p.name + "\\n")
-            print(f"Posted! Next in {INTERVAL_SECONDS}s")
-        except Exception as e:
-            print(f"Error: {e}")
-        time.sleep(INTERVAL_SECONDS)
-`;
-        const blob = new Blob([pyCode], { type: 'text/x-python' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'telegram_auto_poster.py';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-        showToast('telegram_auto_poster.py downloaded!', 'success');
-      }
-
       // ===================== STORAGE =====================
       function saveConfig() {
         try {
@@ -2457,7 +2375,6 @@ while True:
         }
       });
       el.testOneBtn.addEventListener('click', sendOneTestPost);
-      el.downloadPyBtn.addEventListener('click', downloadPythonScript);
 
       el.ytIntervalInput.addEventListener('input', updateYtIntervalUI);
       document.querySelectorAll('.yt-preset-btn').forEach((btn) => {
