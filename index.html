@@ -11,14 +11,31 @@
     };
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      background: linear-gradient(135deg, #f4f7ff 0%, #eef3ff 48%, #f6f2ff 100%);
+      transition: background 0.25s ease, color 0.2s ease;
+    }
+    .pastel-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 12px 32px -14px rgba(37, 99, 235, 0.12), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+      backdrop-filter: blur(12px);
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 75% 42%, rgba(96, 165, 250, 0.28) 0%, rgba(167, 139, 250, 0.16) 42%, rgba(255, 255, 255, 0) 72%);
     }
     .drop-active {
       border-color: #2563eb !important;
       background-color: #eff6ff !important;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .float-slow {
+      animation: floatSlow 4.2s ease-in-out infinite;
     }
 
     /* Dark Mode Overrides */
@@ -26,17 +43,19 @@
       color-scheme: dark;
     }
     html.dark body {
-      background-color: #020617 !important;
+      background: linear-gradient(135deg, #060a16 0%, #0b1120 50%, #111328 100%) !important;
       color: #f1f5f9 !important;
     }
-    html.dark header,
-    html.dark section.bg-white,
-    html.dark #settingsCard {
-      background-color: #0f172a !important;
+    html.dark aside,
+    html.dark .pastel-card,
+    html.dark #settingsCard,
+    html.dark #aboutCard {
+      background: rgba(15, 23, 42, 0.92) !important;
       border-color: #1e293b !important;
+      box-shadow: 0 14px 36px -14px rgba(0, 0, 0, 0.55) !important;
     }
-    html.dark section.border-sky-200 {
-      border-color: #075985 !important;
+    html.dark .hero-glow {
+      background: radial-gradient(circle at 75% 42%, rgba(37, 99, 235, 0.25) 0%, rgba(124, 58, 237, 0.14) 45%, rgba(15, 23, 42, 0) 75%);
     }
     html.dark #helpPanel {
       background-color: rgba(12, 74, 110, 0.35) !important;
@@ -51,14 +70,15 @@
       background-color: rgba(15, 23, 42, 0.85) !important;
       color: #7dd3fc !important;
     }
-    html.dark .bg-white:not(button):not(label) {
-      background-color: #0f172a !important;
+    html.dark .bg-white:not(button):not(label),
+    html.dark .bg-white\/90,
+    html.dark .bg-white\/80 {
+      background-color: #1e293b !important;
     }
     html.dark .bg-slate-50,
     html.dark .bg-slate-50\/70,
-    html.dark .bg-slate-50\/50 {
-      background-color: #1e293b !important;
-    }
+    html.dark .bg-slate-50\/60,
+    html.dark .bg-slate-50\/50,
     html.dark .bg-slate-100 {
       background-color: #1e293b !important;
     }
@@ -66,7 +86,9 @@
       background-color: #334155 !important;
     }
     html.dark .border-slate-100,
-    html.dark .border-slate-200 {
+    html.dark .border-slate-200,
+    html.dark .border-slate-200\/80,
+    html.dark .border-slate-200\/90 {
       border-color: #334155 !important;
     }
     html.dark .border-slate-300 {
@@ -100,28 +122,36 @@
       color: #64748b !important;
     }
     html.dark .bg-sky-50,
-    html.dark .bg-sky-50\/60 {
-      background-color: rgba(14, 165, 233, 0.16) !important;
+    html.dark .bg-blue-50,
+    html.dark .bg-blue-50\/70,
+    html.dark .bg-blue-50\/40 {
+      background-color: rgba(37, 99, 235, 0.18) !important;
     }
     html.dark .text-sky-900,
-    html.dark .text-sky-700 {
-      color: #7dd3fc !important;
+    html.dark .text-sky-700,
+    html.dark .text-blue-700,
+    html.dark .text-blue-600 {
+      color: #93c5fd !important;
+    }
+    html.dark .bg-purple-50,
+    html.dark .bg-indigo-50 {
+      background-color: rgba(124, 58, 237, 0.18) !important;
     }
     html.dark .bg-red-50 {
-      background-color: rgba(239, 68, 68, 0.16) !important;
+      background-color: rgba(239, 68, 68, 0.18) !important;
     }
     html.dark .text-red-700,
     html.dark .text-red-600 {
       color: #fca5a5 !important;
     }
     html.dark .bg-emerald-50 {
-      background-color: rgba(16, 185, 129, 0.16) !important;
+      background-color: rgba(16, 185, 129, 0.18) !important;
     }
     html.dark .text-emerald-700 {
       color: #6ee7b7 !important;
     }
     html.dark .bg-amber-50 {
-      background-color: rgba(245, 158, 11, 0.16) !important;
+      background-color: rgba(245, 158, 11, 0.18) !important;
     }
     html.dark .text-amber-900 {
       color: #fde68a !important;
@@ -130,21 +160,46 @@
       border-color: #b45309 !important;
     }
     html.dark .bg-rose-50 {
-      background-color: rgba(244, 63, 94, 0.16) !important;
+      background-color: rgba(244, 63, 94, 0.18) !important;
     }
     html.dark .text-rose-700,
     html.dark .text-rose-600 {
       color: #fda4af !important;
     }
-    html.dark label[data-run-card].bg-white {
+    html.dark #masterToggleBtn.bg-slate-950 {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+    }
+    html.dark #masterToggleBtn.bg-slate-950:hover {
+      background-color: #1d4ed8 !important;
+    }
+    html.dark #testOneBtn {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+      border-color: #334155 !important;
+    }
+    html.dark #testOneBtn:hover {
+      background-color: #334155 !important;
+    }
+    html.dark #toggleHelpBtn,
+    html.dark #toggleSettingsBtn {
+      background-color: #1e293b !important;
+      color: #e2e8f0 !important;
+      border-color: #334155 !important;
+    }
+    html.dark #toggleHelpBtn:hover,
+    html.dark #toggleSettingsBtn:hover {
+      background-color: #334155 !important;
+    }
+    html.dark label[data-run-card].bg-white\/80 {
       background-color: #1e293b !important;
       color: #cbd5e1 !important;
       border-color: #334155 !important;
     }
-    html.dark label[data-run-card].bg-sky-50 {
-      background-color: rgba(14, 165, 233, 0.22) !important;
-      color: #e0f2fe !important;
-      border-color: #38bdf8 !important;
+    html.dark label[data-run-card].bg-blue-50 {
+      background-color: rgba(37, 99, 235, 0.25) !important;
+      color: #dbeafe !important;
+      border-color: #60a5fa !important;
     }
     html.dark #tabDeviceBtn.bg-white,
     html.dark #tabUrlBtn.bg-white,
@@ -153,11 +208,11 @@
       color: #f8fafc !important;
     }
     html.dark #verifyBotBtn {
-      background-color: #0284c7 !important;
+      background-color: #2563eb !important;
       color: #ffffff !important;
     }
     html.dark #verifyBotBtn:hover {
-      background-color: #0369a1 !important;
+      background-color: #1d4ed8 !important;
     }
     html.dark #saveConfigBtn:hover,
     html.dark #toggleTokenVisBtn:hover,
@@ -167,10 +222,6 @@
     html.dark .preset-btn.bg-slate-100:hover,
     html.dark .yt-preset-btn.bg-slate-100:hover {
       background-color: #334155 !important;
-    }
-    html.dark .drop-active {
-      border-color: #38bdf8 !important;
-      background-color: rgba(14, 165, 233, 0.18) !important;
     }
     html.dark #lightModeBtn.bg-white,
     html.dark #darkModeBtn.bg-white {
@@ -184,595 +235,760 @@
     }
     html.dark #lightModeBtn.bg-sky-50,
     html.dark #darkModeBtn.bg-sky-50 {
-      background-color: rgba(14, 165, 233, 0.22) !important;
-      color: #e0f2fe !important;
+      background-color: rgba(37, 99, 235, 0.25) !important;
+      color: #dbeafe !important;
+      border-color: #60a5fa !important;
+    }
+    html.dark .drop-active {
       border-color: #38bdf8 !important;
+      background-color: rgba(37, 99, 235, 0.2) !important;
     }
     html.dark #activityLog {
       background-color: #020617 !important;
-      border: 1px solid #1e293b;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen antialiased">
+<body class="text-slate-900 min-h-screen antialiased">
   <!-- Toast Container -->
   <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-sm shrink-0">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-          </svg>
-        </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Telegram HD Auto-Poster</h1>
-          <p class="text-xs text-slate-500">Photos, Auto Messages, Links aur YouTube New Video Auto-Post</p>
-        </div>
-      </div>
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="hidden fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs lg:hidden"></div>
 
-      <div class="flex items-center gap-2">
-        <span id="statusBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
-          <span id="statusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
-          <span id="statusText">Ready</span>
-        </span>
-        <button id="toggleHelpBtn" type="button" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
-          Setup Guide
-        </button>
-        <button id="toggleSettingsBtn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition" aria-haspopup="dialog" aria-controls="settingsModal">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span>Settings</span>
-        </button>
-      </div>
-    </div>
-  </header>
+  <div class="min-h-screen flex">
+    <!-- Left Sidebar Navigation -->
+    <aside id="appSidebar" class="fixed lg:sticky top-0 left-0 z-40 h-screen w-60 shrink-0 bg-white/90 backdrop-blur-md border-r border-slate-200/80 flex flex-col justify-between p-5 transform -translate-x-full lg:translate-x-0 transition-transform duration-200">
+      <div class="space-y-7">
+        <!-- Brand Logo -->
+        <div class="flex flex-col items-center text-center pt-1">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/25 mb-2.5">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M21.9 3.6c-.4-.3-1-.4-1.5-.2L2.6 10.2c-.6.2-1 .8-1 1.4 0 .6.4 1.2 1 1.4l4.6 1.6 1.8 5.6c.2.5.6.9 1.2 1 .5.1 1.1-.1 1.4-.5l2.7-3.1 4.4 3.3c.3.2.6.3 1 .3.2 0 .4 0 .6-.1.5-.2.9-.7 1-1.2l2.9-14.9c.1-.5-.1-1.1-.3-1.4zM9.6 14.3l8.1-6.5-6.4 7.7-.4 2.7-1.3-3.9z"/>
+            </svg>
+          </div>
+          <div class="text-base font-extrabold text-slate-900 tracking-tight leading-none">Telegram</div>
+          <div class="text-[11px] font-medium text-slate-500 mt-1">HD Auto-Poster</div>
+        </div>
 
-  <!-- Settings Modal -->
-  <div id="settingsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
-    <div id="settingsCard" class="w-full max-w-md rounded-2xl bg-white border border-slate-200 shadow-2xl p-5 space-y-5">
-      <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <!-- Nav Links -->
+        <nav class="space-y-1.5" aria-label="Sidebar Navigation">
+          <button id="navDashboardBtn" type="button" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-blue-500 to-sky-400 text-white text-xs font-bold shadow-md shadow-blue-500/25 transition">
+            <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            <span>Dashboard</span>
+          </button>
+
+          <button id="navSettingsBtn" type="button" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 text-xs font-semibold transition">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-          </div>
-          <div>
-            <h2 id="settingsModalTitle" class="text-sm font-bold text-slate-900">App Settings</h2>
-            <p class="text-[11px] text-slate-500">Appearance aur display mode yahan se badlein</p>
-          </div>
-        </div>
-        <button id="closeSettingsBtn" type="button" class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 transition" aria-label="Close settings">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Appearance / Theme Setting -->
-      <div class="space-y-3">
-        <div class="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-          <div>
-            <div class="text-xs font-bold text-slate-900">Dark / Light Mode</div>
-            <div id="currentThemeLabel" class="text-[11px] text-slate-500 mt-0.5">Abhi Light Mode active hai</div>
-          </div>
-          <button
-            id="themeToggleBtn"
-            type="button"
-            role="switch"
-            aria-checked="false"
-            aria-label="Toggle Dark Mode"
-            class="relative inline-flex h-7 w-12 shrink-0 items-center rounded-full bg-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500"
-          >
-            <span id="themeToggleKnob" class="inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-1"></span>
+            <span>Settings</span>
           </button>
-        </div>
 
-        <div class="grid grid-cols-2 gap-2.5">
-          <button id="lightModeBtn" type="button" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-900 text-xs font-bold transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          <button id="navGuideBtn" type="button" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 text-xs font-semibold transition">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <span>Light Mode</span>
+            <span>Setup Guide</span>
           </button>
-          <button id="darkModeBtn" type="button" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+
+          <button id="navAboutBtn" type="button" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 text-xs font-semibold transition">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>Dark Mode</span>
+            <span>About</span>
           </button>
+        </nav>
+      </div>
+
+      <!-- Bottom System Online Pill -->
+      <div class="rounded-2xl bg-slate-50 border border-slate-200/80 p-3.5 text-center space-y-1">
+        <div class="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-slate-800">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>System Online</span>
         </div>
+        <div class="text-[11px] text-slate-500">v1.0.0 • Browser Local</div>
       </div>
+    </aside>
 
-      <div class="flex items-center justify-between pt-2 border-t border-slate-200">
-        <span class="text-[11px] text-slate-500">Theme browser me auto-save hoti hai</span>
-        <button id="doneSettingsBtn" type="button" class="px-4 py-1.5 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 transition">
-          Done
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-    <!-- Collapsible Setup Guide -->
-    <section id="helpPanel" class="hidden bg-sky-50 border border-sky-200 rounded-2xl p-4 sm:p-5">
-      <div class="flex items-start justify-between gap-4">
-        <div>
-          <h2 class="text-sm font-bold text-sky-950 mb-2">Bot Token aur Channel ID kaise milega? (2 Minute Setup)</h2>
-          <ol class="text-xs sm:text-sm text-sky-900 space-y-1.5 list-decimal list-inside">
-            <li>Telegram open karein, <strong>@BotFather</strong> search karein aur <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">/newbot</code> bhejein.</li>
-            <li>Apne bot ka naam aur username set karein — BotFather aapko ek <strong>Bot Token</strong> dega (jaise <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">123456:ABC-DEF...</code>). Use neeche Box 1 me paste karein.</li>
-            <li>Apne Telegram Channel ke <strong>Administrators</strong> me jaakar apne naye bot ko add karein aur <strong>Post Messages</strong> on karein.</li>
-            <li>Public channel ke liye <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">@your_channel_username</code> daalein. Private channel ke liye uski numeric ID (jaise <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">-1001234567890</code>) daalein.</li>
-            <li>Neeche photos add karein, <strong>Test 1 Photo</strong> daba kar check karein, aur phir <strong>Start Auto-Posting</strong> chala dein.</li>
-          </ol>
-        </div>
-        <button id="closeHelpBtn" type="button" class="text-sky-700 hover:text-sky-950 p-1 rounded-lg" aria-label="Close guide">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- SINGLE MASTER CONTROL BAR -->
-    <section class="bg-white rounded-2xl border-2 border-sky-200 shadow-sm p-4 sm:p-5 space-y-3.5">
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <h2 class="text-sm sm:text-base font-bold text-slate-900">Master Auto-Post Control</h2>
-          <p class="text-xs text-slate-500">Yahan se mode chunein aur ek hi button se sab start ya stop karein</p>
-        </div>
-        <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
-          <span id="countdownDisplay" class="font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg">Photo Next: --:--</span>
-          <span id="ytCountdownDisplay" class="font-bold text-red-700 bg-red-50 px-2.5 py-1 rounded-lg">YT Next: --:--</span>
-        </div>
-      </div>
-
-      <!-- 3 Clear Mode Options right above the single button -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="runModeGroup">
-        <label class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-900 text-xs font-bold cursor-pointer text-center transition" data-run-card="both">
-          <input type="radio" name="runMode" value="both" checked class="sr-only" />
-          <span>Dono (Apne-Apne Time Par)</span>
-        </label>
-        <label class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold cursor-pointer text-center transition" data-run-card="youtube">
-          <input type="radio" name="runMode" value="youtube" class="sr-only" />
-          <span>Sirf YouTube Link</span>
-        </label>
-        <label class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold cursor-pointer text-center transition" data-run-card="queue">
-          <input type="radio" name="runMode" value="queue" class="sr-only" />
-          <span>Sirf Photo / Msg</span>
-        </label>
-      </div>
-
-      <div id="masterAlertBanner" class="hidden rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-2 text-xs font-medium text-amber-900"></div>
-
-      <!-- Single Toggle Button + Test Now -->
-      <div class="flex flex-col sm:flex-row gap-2.5">
-        <button id="masterToggleBtn" type="button" class="flex-1 px-5 py-3 rounded-xl bg-sky-600 text-white text-sm font-bold hover:bg-sky-700 transition shadow-sm flex items-center justify-center gap-2">
-          <svg id="masterBtnIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          <span id="startBtnLabel">Start Auto-Post &amp; Link</span>
-        </button>
-        <button id="testOneBtn" type="button" class="sm:w-48 px-4 py-3 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-bold hover:bg-emerald-700 transition shadow-sm">
-          Test 1 Post Now
-        </button>
-      </div>
-
-      <!-- Compact Progress Bar -->
-      <div class="pt-1">
-        <div class="flex items-center justify-between text-[11px] text-slate-600 mb-1">
-          <span id="progressStats">0 / 0 items posted</span>
-          <span id="progressPercent">0%</span>
-        </div>
-        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-          <div id="progressBar" class="h-full bg-sky-600 rounded-full transition-all duration-300" style="width: 0%"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <!-- Left Column: Settings & Controls -->
-      <div class="lg:col-span-5 space-y-6">
-        <!-- Step 1: Bot & Channel -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center font-bold">1</span>
-              Bot Token aur Channel
-            </h2>
-            <span id="botVerifiedBadge" class="hidden text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full"></span>
-          </div>
-
-          <div class="space-y-3">
-            <div>
-              <label for="botTokenInput" class="block text-xs font-semibold text-slate-700 mb-1">
-                Telegram Bot Token <span class="text-rose-500">*</span>
-              </label>
-              <div class="relative flex gap-2">
-                <input
-                  id="botTokenInput"
-                  type="password"
-                  placeholder="123456789:AAHxxxxxxxxxxxxxxxxxxxxxxxx"
-                  autocomplete="off"
-                  class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                />
-                <button id="toggleTokenVisBtn" type="button" class="px-3 rounded-xl border border-slate-300 text-xs font-medium text-slate-600 hover:bg-slate-50 shrink-0">
-                  Show
-                </button>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-1">Aapka token sirf aapke browser me rehta hai, kahin aur save nahi hota.</p>
-            </div>
-
-            <div>
-              <label for="channelIdInput" class="block text-xs font-semibold text-slate-700 mb-1">
-                Channel Username ya ID <span class="text-rose-500">*</span>
-              </label>
-              <input
-                id="channelIdInput"
-                type="text"
-                placeholder="@your_channel_username ya -1001234567890"
-                class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-              />
-            </div>
-
-            <div class="flex flex-wrap gap-2 pt-1">
-              <button id="verifyBotBtn" type="button" class="flex-1 px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition">
-                Bot Check Karein
-              </button>
-              <button id="detectChannelBtn" type="button" class="px-3.5 py-2 rounded-xl bg-sky-50 text-sky-700 border border-sky-200 text-xs font-semibold hover:bg-sky-100 transition">
-                Auto-Find ID
-              </button>
-              <button id="saveConfigBtn" type="button" class="px-3.5 py-2 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition">
-                Save
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Step 2: Quality & Timer -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
-          <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center font-bold">2</span>
-            Quality aur Timer Settings
-          </h2>
-
-          <!-- Quality Mode -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-2">Photo Quality Mode</label>
-            <div class="grid grid-cols-1 gap-2" id="qualityModeGroup">
-              <label class="flex items-start gap-3 p-3 rounded-xl border border-sky-500 bg-sky-50/60 cursor-pointer transition" data-mode-card="document">
-                <input type="radio" name="sendMode" value="document" checked class="mt-0.5 accent-sky-600" />
-                <div>
-                  <div class="text-xs font-bold text-slate-900">100% Original Quality (File / Document)</div>
-                  <div class="text-[11px] text-slate-600">Zero compression, full HD resolution (max 50 MB)</div>
-                </div>
-              </label>
-
-              <label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition" data-mode-card="photo">
-                <input type="radio" name="sendMode" value="photo" class="mt-0.5 accent-sky-600" />
-                <div>
-                  <div class="text-xs font-bold text-slate-900">Normal Photo Preview</div>
-                  <div class="text-[11px] text-slate-600">Channel me seedha image dikhegi (Telegram thoda compress karta hai, max 10 MB)</div>
-                </div>
-              </label>
-
-              <label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition" data-mode-card="both">
-                <input type="radio" name="sendMode" value="both" class="mt-0.5 accent-sky-600" />
-                <div>
-                  <div class="text-xs font-bold text-slate-900">Dono (Preview + Original HD File)</div>
-                  <div class="text-[11px] text-slate-600">Pehle preview image, turant uske neeche uncompressed file</div>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <!-- Interval -->
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label for="intervalInput" class="text-xs font-semibold text-slate-700">Har Post ka Gap (Seconds)</label>
-              <span id="intervalHumanLabel" class="text-xs font-semibold text-sky-700">2 min 0 sec</span>
-            </div>
-            <input
-              id="intervalInput"
-              type="number"
-              min="5"
-              max="86400"
-              value="120"
-              class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
-            />
-            <div class="flex flex-wrap gap-1.5 mt-2">
-              <button type="button" data-preset-sec="30" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">30s (Test)</button>
-              <button type="button" data-preset-sec="60" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">1 min</button>
-              <button type="button" data-preset-sec="120" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-sky-600 text-white">2 min</button>
-              <button type="button" data-preset-sec="300" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">5 min</button>
-              <button type="button" data-preset-sec="600" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">10 min</button>
-            </div>
-          </div>
-
-          <!-- Default Caption -->
-          <div>
-            <label for="defaultCaptionInput" class="block text-xs font-semibold text-slate-700 mb-1">Default Caption / Footer Text (Optional)</label>
-            <textarea
-              id="defaultCaptionInput"
-              rows="2"
-              placeholder="Jaise: Daily HD Wallpapers — Join @yourchannel"
-              class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
-            ></textarea>
-          </div>
-
-          <!-- Clickable Link Button (Inline Keyboard) -->
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="text-xs font-semibold text-slate-800">Clickable Link Button (Optional)</div>
-            <p class="text-[11px] text-slate-500">Har photo ya message ke neeche ek clickable button lagane ke liye</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <input
-                id="btnTextInput"
-                type="text"
-                placeholder="Button naam (e.g. Join Channel)"
-                class="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
-              />
-              <input
-                id="btnUrlInput"
-                type="url"
-                placeholder="https://t.me/yourchannel"
-                class="w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
-              />
-            </div>
-          </div>
-
-          <!-- Loop Toggle -->
-          <label class="flex items-center justify-between gap-3 pt-1 cursor-pointer">
-            <span class="text-xs font-medium text-slate-700">Saari photos hone par dobara loop chalayein</span>
-            <input id="loopCheckbox" type="checkbox" class="w-4 h-4 accent-sky-600 rounded" />
-          </label>
-
-        </section>
-      </div>
-
-      <!-- Right Column: Photo Queue & Logs -->
-      <div class="lg:col-span-7 space-y-6">
-        <!-- Step 3: Add Photos -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center font-bold">3</span>
-              Photos, Auto Msg aur Links Add Karein
-            </h2>
-            <div class="inline-flex rounded-xl bg-slate-100 p-1 flex-wrap">
-              <button id="tabDeviceBtn" type="button" class="px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm">
-                Phone / PC se
-              </button>
-              <button id="tabUrlBtn" type="button" class="px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900">
-                Image URLs
-              </button>
-              <button id="tabMsgBtn" type="button" class="px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900">
-                Auto Msg / Link
-              </button>
-            </div>
-          </div>
-
-          <!-- Device Upload Panel -->
-          <div id="deviceUploadPanel" class="space-y-2.5">
-            <div id="dropZone" class="relative border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:border-sky-400 transition cursor-pointer bg-slate-50/70">
-              <input
-                id="fileInput"
-                type="file"
-                accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.heif,.avif"
-                multiple
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                aria-label="Select photos from device"
-              />
-              <div class="w-11 h-11 rounded-full bg-sky-100 text-sky-600 mx-auto mb-2.5 flex items-center justify-center pointer-events-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <p class="text-sm font-semibold text-slate-800 pointer-events-none">Photos yahan click karke select karein (ya drag &amp; drop)</p>
-              <p class="text-xs text-slate-500 mt-1 pointer-events-none">Ek saath 10, 50 ya 100+ HD photos (JPG, PNG, WEBP, HEIC) select kar sakte hain</p>
-              <div class="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-semibold shadow-sm pointer-events-none">
-                <span>Gallery / Folder se Photos Chunein</span>
-              </div>
-            </div>
-            <p class="text-[11px] text-slate-500">Agar yahan file picker open na ho, to is page ko download karke Chrome me open karein ya <strong>Image URLs</strong> tab use karein.</p>
-          </div>
-
-          <!-- URL Upload Panel -->
-          <div id="urlUploadPanel" class="hidden space-y-3">
-            <textarea
-              id="urlTextarea"
-              rows="4"
-              placeholder="Har line me ek direct image URL paste karein:&#10;https://example.com/photo1.jpg&#10;https://example.com/photo2.png"
-              class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
-            ></textarea>
-            <button id="addUrlsBtn" type="button" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 transition">
-              Queue me Add Karein
+    <!-- Main Workspace Area -->
+    <div class="flex-1 min-w-0 hero-glow">
+      <!-- Top Utility Bar -->
+      <header class="sticky top-0 z-30 px-4 sm:px-8 py-3.5 backdrop-blur-md bg-white/50 border-b border-white/60">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 rounded-xl bg-white/90 border border-slate-200 text-slate-700 hover:bg-slate-100 transition" aria-label="Open menu">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
             </button>
-          </div>
-
-          <!-- Auto Message & Link Panel -->
-          <div id="msgUploadPanel" class="hidden space-y-3">
-            <div>
-              <label for="autoMsgTextarea" class="block text-xs font-semibold text-slate-700 mb-1">Auto Message Text</label>
-              <textarea
-                id="autoMsgTextarea"
-                rows="3"
-                placeholder="Apna auto message likhein... (jaise: New HD Collection live! Neeche link par click karein)"
-                class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
-              ></textarea>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div>
-                <label for="msgLinkUrlInput" class="block text-xs font-semibold text-slate-700 mb-1">Link URL (Optional)</label>
-                <input
-                  id="msgLinkUrlInput"
-                  type="url"
-                  placeholder="https://example.com ya https://t.me/..."
-                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-              </div>
-              <div>
-                <label for="msgLinkLabelInput" class="block text-xs font-semibold text-slate-700 mb-1">Link Button Name (Optional)</label>
-                <input
-                  id="msgLinkLabelInput"
-                  type="text"
-                  placeholder="Jaise: Open Link / Download Now"
-                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500"
-                />
-              </div>
-            </div>
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <label class="inline-flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
-                <input id="msgPreviewCheckbox" type="checkbox" checked class="w-4 h-4 accent-sky-600 rounded" />
-                <span>Link preview dikhayein</span>
-              </label>
-              <button id="addMsgBtn" type="button" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 transition">
-                Auto Msg Queue me Add Karein
-              </button>
-            </div>
-          </div>
-
-          <!-- Queue Header & Direct Run Bar -->
-          <div class="pt-3 border-t border-slate-100 space-y-2.5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="text-xs font-bold text-slate-800">
-                Post Queue (<span id="queueCount">0</span>)
-              </div>
-              <div class="flex flex-wrap items-center gap-2">
-                <button id="resetQueueStatusBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition">
-                  Reset Sent
-                </button>
-                <button id="clearQueueBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-rose-600 bg-rose-50 hover:bg-rose-100 transition">
-                  Clear All
-                </button>
-              </div>
-            </div>
-            <div id="queueAlertBanner" class="hidden rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-2.5 text-xs font-medium text-amber-900"></div>
-          </div>
-
-          <!-- Queue List -->
-          <div id="queueList" class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
-            <div class="text-center py-8 text-xs text-slate-400">
-              Abhi koi photo add nahi ki gayi hai. Upar se photos select karein.
-            </div>
-          </div>
-        </section>
-
-        <!-- Step 5: YouTube New Video Auto-Notifier -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-6 h-6 rounded-full bg-red-600 text-white text-xs flex items-center justify-center font-bold">YT</span>
-              YouTube New Video Auto-Share
-            </h2>
-            <span id="ytStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">
-              <span id="ytStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-              <span id="ytStatusText">Off</span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/70">
+              <span>⚡</span>
+              <span>Smart Auto-Posting Tool</span>
             </span>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label for="ytChannelInput" class="block text-xs font-semibold text-slate-700 mb-1">
-                YouTube Channel Link <span class="text-rose-500">*</span>
-              </label>
-              <input
-                id="ytChannelInput"
-                type="text"
-                placeholder="https://www.youtube.com/@aajtak/videos"
-                class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-              <p class="text-[10px] text-slate-500 mt-1">Bina login / bina API key — seedha channel link paste karein (jaise youtube.com/@aajtak/videos)</p>
-            </div>
-
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="ytIntervalInput" class="text-xs font-semibold text-slate-700">
-                  Fast Check Gap (Seconds)
-                </label>
-                <span id="ytIntervalHuman" class="text-[11px] font-semibold text-red-600">30 sec</span>
-              </div>
-              <input
-                id="ytIntervalInput"
-                type="number"
-                min="10"
-                max="3600"
-                value="30"
-                class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-              <div class="flex flex-wrap gap-1 mt-1.5">
-                <button type="button" data-yt-sec="15" class="yt-preset-btn px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">15s (Fastest)</button>
-                <button type="button" data-yt-sec="30" class="yt-preset-btn px-2 py-0.5 rounded-md text-[10px] font-semibold bg-red-600 text-white">30s</button>
-                <button type="button" data-yt-sec="60" class="yt-preset-btn px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">1 min</button>
-                <button type="button" data-yt-sec="120" class="yt-preset-btn px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">2 min</button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label for="ytTemplateInput" class="block text-xs font-semibold text-slate-700 mb-1">
-              Telegram Message Template
-            </label>
-            <textarea
-              id="ytTemplateInput"
-              rows="3"
-              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
-            >New YouTube Video Uploaded!
-{title}
-{url}</textarea>
-            <p class="text-[10px] text-slate-500 mt-1"><code class="bg-slate-100 px-1 rounded">{title}</code> aur <code class="bg-slate-100 px-1 rounded">{url}</code> apne aap video ke title aur link se replace honge.</p>
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <label class="inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
-                <input id="ytWatchBtnCheckbox" type="checkbox" checked class="w-4 h-4 accent-red-600 rounded" />
-                <span>"Watch on YouTube" clickable button lagayein</span>
-              </label>
-              <label class="inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
-                <input id="ytFreshOnlyCheckbox" type="checkbox" checked class="w-4 h-4 accent-red-600 rounded" />
-                <span>Sirf abhi upload / live hue videos bhejein (purane skip)</span>
-              </label>
-            </div>
-            <details class="rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-2">
-              <summary class="text-[11px] font-semibold text-slate-600 cursor-pointer select-none">Advanced: Optional YouTube API Key (zaroori nahi hai)</summary>
-              <div class="mt-2">
-                <input
-                  id="ytApiKeyInput"
-                  type="password"
-                  placeholder="AIzaSy... (khali chhod dein — bina key ke direct link se chalega)"
-                  autocomplete="off"
-                  class="w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-              </div>
-            </details>
-            <div id="ytLastVideoInfo" class="text-[11px] font-medium text-slate-600 truncate"></div>
-          </div>
-
-          <div id="ytAlertBanner" class="hidden rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900"></div>
-          <p class="text-[11px] text-slate-500">Upar <strong>Master Auto-Post Control</strong> me mode select karke ek hi button se Start/Stop karein.</p>
-        </section>
-
-        <!-- Live Activity Log -->
-        <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
-          <div class="flex items-center justify-between">
-            <h2 class="text-sm font-bold text-slate-900">Live Activity Log</h2>
-            <button id="clearLogBtn" type="button" class="text-xs font-medium text-slate-500 hover:text-slate-800">
-              Clear Log
+          <div class="flex items-center gap-2">
+            <span id="statusBadge" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 shadow-xs">
+              <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span id="statusText">Ready to Post</span>
+            </span>
+            <button id="toggleHelpBtn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-blue-50 hover:text-blue-700 shadow-xs transition">
+              <svg class="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+              <span>Setup Guide</span>
+            </button>
+            <button id="toggleSettingsBtn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100 shadow-xs transition" aria-haspopup="dialog" aria-controls="settingsModal">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span class="hidden sm:inline">Settings</span>
             </button>
           </div>
-          <div id="activityLog" class="bg-slate-900 text-slate-100 rounded-xl p-3.5 font-mono text-xs h-48 overflow-y-auto space-y-1.5">
-            <div class="text-slate-400">[Ready] Bot Token aur Channel ID daalein, photos add karein, aur Test ya Start dabaiye.</div>
+        </div>
+      </header>
+
+      <!-- Settings Modal -->
+      <div id="settingsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <div id="settingsCard" class="w-full max-w-md rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 space-y-5">
+          <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <h2 id="settingsModalTitle" class="text-sm font-bold text-slate-900">App Settings</h2>
+                <p class="text-[11px] text-slate-500">Appearance aur display mode yahan se badlein</p>
+              </div>
+            </div>
+            <button id="closeSettingsBtn" type="button" class="p-1.5 rounded-xl text-slate-500 hover:bg-slate-100 transition" aria-label="Close settings">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div>
+                <div class="text-xs font-bold text-slate-900">Dark / Light Mode</div>
+                <div id="currentThemeLabel" class="text-[11px] text-slate-500 mt-0.5">Abhi Light Mode active hai</div>
+              </div>
+              <button
+                id="themeToggleBtn"
+                type="button"
+                role="switch"
+                aria-checked="false"
+                aria-label="Toggle Dark Mode"
+                class="relative inline-flex h-7 w-12 shrink-0 items-center rounded-full bg-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <span id="themeToggleKnob" class="inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-1"></span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <button id="lightModeBtn" type="button" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-900 text-xs font-bold transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span>Light Mode</span>
+              </button>
+              <button id="darkModeBtn" type="button" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+                <span>Dark Mode</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-slate-200">
+            <span class="text-[11px] text-slate-500">Theme browser me auto-save hoti hai</span>
+            <button id="doneSettingsBtn" type="button" class="px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Modal -->
+      <div id="aboutModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle">
+        <div id="aboutCard" class="w-full max-w-md rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200">
+            <h2 id="aboutModalTitle" class="text-sm font-bold text-slate-900">About Telegram HD Auto-Poster</h2>
+            <button id="closeAboutBtn" type="button" class="p-1.5 rounded-xl text-slate-500 hover:bg-slate-100 transition" aria-label="Close about">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            <strong>Telegram HD Auto-Poster v1.0.0</strong> aapke browser se seedha Telegram Channel par 100% original HD photos, auto messages, clickable links aur YouTube ke naye videos auto-post karta hai. Aapka Bot Token sirf aapke browser me rehta hai.
+          </p>
+          <div class="flex justify-end pt-1">
+            <button id="doneAboutBtn" type="button" class="px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <main class="max-w-6xl mx-auto px-4 sm:px-8 py-6 space-y-6">
+        <!-- Collapsible Setup Guide -->
+        <section id="helpPanel" class="hidden bg-sky-50 border border-sky-200 rounded-3xl p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="text-sm font-bold text-sky-950 mb-2">Bot Token aur Channel ID kaise milega? (2 Minute Setup)</h2>
+              <ol class="text-xs sm:text-sm text-sky-900 space-y-1.5 list-decimal list-inside">
+                <li>Telegram open karein, <strong>@BotFather</strong> search karein aur <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">/newbot</code> bhejein.</li>
+                <li>Apne bot ka naam aur username set karein — BotFather aapko ek <strong>Bot Token</strong> dega (jaise <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">123456:ABC-DEF...</code>). Use neeche Bot Configuration me paste karein.</li>
+                <li>Apne Telegram Channel ke <strong>Administrators</strong> me jaakar apne naye bot ko add karein aur <strong>Post Messages</strong> on karein.</li>
+                <li>Public channel ke liye <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">@your_channel_username</code> daalein. Private channel ke liye uski numeric ID (jaise <code class="bg-white/80 px-1.5 py-0.5 rounded font-mono text-xs">-1001234567890</code>) daalein.</li>
+                <li>Photos ya YouTube link add karein, <strong>Test Post Now</strong> daba kar check karein, aur phir <strong>Start Auto-Post</strong> chala dein.</li>
+              </ol>
+            </div>
+            <button id="closeHelpBtn" type="button" class="text-sky-700 hover:text-sky-950 p-1.5 rounded-xl" aria-label="Close guide">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </section>
-      </div>
+
+        <!-- HERO + MASTER AUTO-POST CONTROL -->
+        <section class="relative overflow-hidden rounded-3xl p-5 sm:p-7">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-7 space-y-4 relative z-10">
+              <div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                  Telegram HD<br />
+                  <span class="text-blue-600">Auto-Poster</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-600 mt-2">
+                  Post Automatically. Share More.
+                  <span class="relative inline-block font-semibold text-slate-800">
+                    Grow Faster.
+                    <svg class="w-full h-2 absolute -bottom-1 left-0 text-blue-500" viewBox="0 0 100 10" preserveAspectRatio="none">
+                      <path d="M2 7 Q50 1 98 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </p>
+              </div>
+
+              <!-- 3 Mode Selector Pills -->
+              <div class="flex flex-wrap gap-2" id="runModeGroup">
+                <label class="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full border border-blue-500 bg-blue-50 text-blue-700 text-xs font-bold cursor-pointer text-center shadow-xs transition" data-run-card="both">
+                  <input type="radio" name="runMode" value="both" checked class="sr-only" />
+                  <span>Dono (Apne-Apne Time Par)</span>
+                </label>
+                <label class="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full border border-slate-200/80 bg-white/80 text-slate-600 hover:border-blue-300 text-xs font-semibold cursor-pointer text-center transition" data-run-card="youtube">
+                  <input type="radio" name="runMode" value="youtube" class="sr-only" />
+                  <span>Sirf YouTube Link</span>
+                </label>
+                <label class="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full border border-slate-200/80 bg-white/80 text-slate-600 hover:border-blue-300 text-xs font-semibold cursor-pointer text-center transition" data-run-card="queue">
+                  <input type="radio" name="runMode" value="queue" class="sr-only" />
+                  <span>Sirf Photo / Msg</span>
+                </label>
+              </div>
+
+              <div id="masterAlertBanner" class="hidden rounded-2xl border border-amber-300 bg-amber-50 px-3.5 py-2 text-xs font-medium text-amber-900"></div>
+
+              <!-- Primary Action Pills -->
+              <div class="flex flex-wrap items-center gap-3 pt-1">
+                <button id="masterToggleBtn" type="button" class="px-6 py-3 rounded-full bg-slate-950 text-white text-sm font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2">
+                  <svg id="masterBtnIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <span id="startBtnLabel">Start Auto-Post →</span>
+                </button>
+                <button id="testOneBtn" type="button" class="px-5 py-3 rounded-full bg-white text-slate-800 border border-slate-200/90 text-sm font-bold hover:bg-slate-50 transition shadow-md shadow-blue-500/10 inline-flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M21.9 3.6c-.4-.3-1-.4-1.5-.2L2.6 10.2c-.6.2-1 .8-1 1.4 0 .6.4 1.2 1 1.4l4.6 1.6 1.8 5.6c.2.5.6.9 1.2 1 .5.1 1.1-.1 1.4-.5l2.7-3.1 4.4 3.3c.3.2.6.3 1 .3.2 0 .4 0 .6-.1.5-.2.9-.7 1-1.2l2.9-14.9c.1-.5-.1-1.1-.3-1.4z"/></svg>
+                  <span>Test Post Now</span>
+                </button>
+              </div>
+
+              <!-- Live Timers + Progress Bar -->
+              <div class="pt-2 space-y-2 max-w-xl">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span id="countdownDisplay" class="font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full">Photo Next: --:--</span>
+                    <span id="ytCountdownDisplay" class="font-bold text-red-700 bg-red-50 px-2.5 py-1 rounded-full">YT Next: --:--</span>
+                  </div>
+                  <span class="text-slate-500 font-sans font-semibold"><span id="progressStats">0 / 0 items posted</span> (<span id="progressPercent">0%</span>)</span>
+                </div>
+                <div class="w-full h-2 bg-white/80 border border-slate-200/70 rounded-full overflow-hidden">
+                  <div id="progressBar" class="h-full bg-gradient-to-r from-blue-500 to-sky-400 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 3D Pastel Illustration -->
+            <div class="hidden lg:flex lg:col-span-5 items-center justify-center relative min-h-[210px]">
+              <div class="relative w-64 h-52 flex items-center justify-center">
+                <!-- Soft Glowing Backdrop Orb -->
+                <div class="absolute w-44 h-44 rounded-full bg-gradient-to-tr from-blue-500/25 via-sky-300/30 to-purple-300/25 blur-xl"></div>
+                <!-- Floating 3D Telegram Badge -->
+                <div class="float-slow relative w-32 h-32 rounded-[2rem] bg-gradient-to-br from-sky-400 via-blue-500 to-blue-700 shadow-2xl shadow-blue-600/35 flex items-center justify-center rotate-[-8deg] border border-white/40">
+                  <svg class="w-16 h-16 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M21.9 3.6c-.4-.3-1-.4-1.5-.2L2.6 10.2c-.6.2-1 .8-1 1.4 0 .6.4 1.2 1 1.4l4.6 1.6 1.8 5.6c.2.5.6.9 1.2 1 .5.1 1.1-.1 1.4-.5l2.7-3.1 4.4 3.3c.3.2.6.3 1 .3.2 0 .4 0 .6-.1.5-.2.9-.7 1-1.2l2.9-14.9c.1-.5-.1-1.1-.3-1.4zM9.6 14.3l8.1-6.5-6.4 7.7-.4 2.7-1.3-3.9z"/>
+                  </svg>
+                </div>
+                <!-- Floating Glass Chips -->
+                <div class="absolute -left-2 bottom-6 w-11 h-11 rounded-2xl bg-white/90 shadow-lg shadow-rose-500/10 border border-white flex items-center justify-center">
+                  <svg class="w-5 h-5 text-rose-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+                </div>
+                <div class="absolute right-0 top-4 w-11 h-11 rounded-2xl bg-white/90 shadow-lg shadow-blue-500/10 border border-white flex items-center justify-center">
+                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="absolute -right-4 bottom-4 px-3.5 py-2 rounded-2xl bg-white/95 shadow-lg shadow-blue-500/10 border border-white flex items-center gap-2">
+                  <span class="w-7 h-7 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  </span>
+                  <div class="leading-tight">
+                    <div class="text-xs font-extrabold text-slate-900">100% HD</div>
+                    <div class="text-[10px] text-slate-500">Zero Compression</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left Column -->
+          <div class="lg:col-span-5 space-y-6">
+            <!-- Card 1: Bot Configuration -->
+            <section class="pastel-card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-slate-900 leading-tight">Bot Configuration</h2>
+                    <p class="text-[11px] text-slate-500">Connect your Telegram Bot</p>
+                  </div>
+                </div>
+                <span id="botVerifiedBadge" class="hidden text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full"></span>
+              </div>
+
+              <div class="space-y-3">
+                <div>
+                  <label for="botTokenInput" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                    Bot Token <span class="text-rose-500">*</span>
+                  </label>
+                  <div class="flex gap-2">
+                    <input
+                      id="botTokenInput"
+                      type="password"
+                      placeholder="123456789:AAHxxxxxxxxxxxxxxxxxxxxxxxx"
+                      autocomplete="off"
+                      class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                    <button id="toggleTokenVisBtn" type="button" class="px-3.5 rounded-2xl border border-slate-200 bg-white text-xs font-semibold text-slate-600 hover:bg-slate-50 shrink-0 transition">
+                      Show
+                    </button>
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-1">Aapka token sirf aapke browser me rehta hai.</p>
+                </div>
+
+                <div>
+                  <label for="channelIdInput" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                    Channel Username or ID <span class="text-rose-500">*</span>
+                  </label>
+                  <input
+                    id="channelIdInput"
+                    type="text"
+                    placeholder="@your_channel_username ya -1001234567890"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <button id="verifyBotBtn" type="button" class="flex-1 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition shadow-xs">
+                    Test Bot
+                  </button>
+                  <button id="detectChannelBtn" type="button" class="px-4 py-2.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 text-xs font-bold hover:bg-blue-100 transition">
+                    Auto-Find ID
+                  </button>
+                  <button id="saveConfigBtn" type="button" class="px-4 py-2.5 rounded-full border border-slate-200 bg-white text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Card 2: Quality & Timer Settings -->
+            <section class="pastel-card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-sm font-bold text-slate-900 leading-tight">Quality &amp; Timer Settings</h2>
+                  <p class="text-[11px] text-slate-500">Choose quality and set posting interval</p>
+                </div>
+              </div>
+
+              <!-- 3-Column Visual Quality Selector -->
+              <div>
+                <div class="grid grid-cols-3 gap-2" id="qualityModeGroup">
+                  <label class="relative flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl border-2 border-blue-500 bg-blue-50/70 cursor-pointer transition shadow-xs" data-mode-card="document">
+                    <input type="radio" name="sendMode" value="document" checked class="sr-only" />
+                    <span class="mode-check-dot absolute top-2 right-2 w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">✓</span>
+                    <div class="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/></svg>
+                    </div>
+                    <div class="text-[11px] font-bold text-slate-900 leading-tight">100% Original</div>
+                    <div class="text-[10px] text-slate-500 leading-tight">No Compression</div>
+                  </label>
+
+                  <label class="relative flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl border border-slate-200/90 bg-slate-50/60 hover:border-blue-300 cursor-pointer transition" data-mode-card="photo">
+                    <input type="radio" name="sendMode" value="photo" class="sr-only" />
+                    <span class="mode-check-dot hidden absolute top-2 right-2 w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">✓</span>
+                    <div class="w-8 h-8 rounded-xl bg-slate-200/70 text-slate-600 flex items-center justify-center">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div class="text-[11px] font-bold text-slate-900 leading-tight">Normal Photo</div>
+                    <div class="text-[10px] text-slate-500 leading-tight">Fast Preview</div>
+                  </label>
+
+                  <label class="relative flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl border border-slate-200/90 bg-slate-50/60 hover:border-blue-300 cursor-pointer transition" data-mode-card="both">
+                    <input type="radio" name="sendMode" value="both" class="sr-only" />
+                    <span class="mode-check-dot hidden absolute top-2 right-2 w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">✓</span>
+                    <div class="w-8 h-8 rounded-xl bg-emerald-100/80 text-emerald-600 flex items-center justify-center">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <div class="text-[11px] font-bold text-slate-900 leading-tight">Dono (HD)</div>
+                    <div class="text-[10px] text-slate-500 leading-tight">Preview + File</div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Interval -->
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label for="intervalInput" class="text-xs font-semibold text-slate-700">Post Interval (Seconds)</label>
+                  <span id="intervalHumanLabel" class="text-xs font-bold text-blue-600">2 min 0 sec</span>
+                </div>
+                <input
+                  id="intervalInput"
+                  type="number"
+                  min="5"
+                  max="86400"
+                  value="120"
+                  class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                  <button type="button" data-preset-sec="30" class="preset-btn px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">30s</button>
+                  <button type="button" data-preset-sec="60" class="preset-btn px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">1 min</button>
+                  <button type="button" data-preset-sec="120" class="preset-btn px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white shadow-xs transition">2 min</button>
+                  <button type="button" data-preset-sec="300" class="preset-btn px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">5 min</button>
+                  <button type="button" data-preset-sec="600" class="preset-btn px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition">10 min</button>
+                </div>
+              </div>
+
+              <!-- Default Caption -->
+              <div>
+                <label for="defaultCaptionInput" class="block text-xs font-semibold text-slate-700 mb-1.5">Default Caption / Footer Text (Optional)</label>
+                <textarea
+                  id="defaultCaptionInput"
+                  rows="2"
+                  placeholder="Jaise: Daily HD Wallpapers — Join @yourchannel"
+                  class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                ></textarea>
+              </div>
+
+              <!-- Clickable Link Button -->
+              <div class="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2">
+                <div class="text-xs font-bold text-slate-800">Clickable Link Button (Optional)</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <input
+                    id="btnTextInput"
+                    type="text"
+                    placeholder="e.g. Join Channel"
+                    class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <input
+                    id="btnUrlInput"
+                    type="url"
+                    placeholder="https://t.me/yourchannel"
+                    class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <!-- Loop Toggle -->
+              <label class="flex items-center justify-between gap-3 pt-1 cursor-pointer">
+                <span class="text-xs font-semibold text-slate-700">Saari photos hone par dobara loop chalayein</span>
+                <input id="loopCheckbox" type="checkbox" class="w-4 h-4 accent-blue-600 rounded" />
+              </label>
+            </section>
+          </div>
+
+          <!-- Right Column -->
+          <div class="lg:col-span-7 space-y-6">
+            <!-- Card 3: Upload & Post Media -->
+            <section class="pastel-card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-slate-900 leading-tight">Upload &amp; Post Media</h2>
+                    <p class="text-[11px] text-slate-500">Add HD photos, image URLs or auto messages</p>
+                  </div>
+                </div>
+                <div class="inline-flex rounded-full bg-slate-100 p-1 flex-wrap">
+                  <button id="tabDeviceBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-900 shadow-xs">
+                    Gallery / PC
+                  </button>
+                  <button id="tabUrlBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900">
+                    Image URLs
+                  </button>
+                  <button id="tabMsgBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900">
+                    Auto Msg / Link
+                  </button>
+                </div>
+              </div>
+
+              <!-- Device Upload Panel -->
+              <div id="deviceUploadPanel" class="space-y-2">
+                <div id="dropZone" class="relative border-2 border-dashed border-blue-300/90 rounded-2xl p-6 text-center hover:border-blue-500 transition cursor-pointer bg-blue-50/40">
+                  <input
+                    id="fileInput"
+                    type="file"
+                    accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.heif,.avif"
+                    multiple
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    aria-label="Select photos from device"
+                  />
+                  <div class="w-12 h-12 rounded-2xl bg-blue-100/80 text-blue-600 mx-auto mb-2.5 flex items-center justify-center pointer-events-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                  </div>
+                  <p class="text-sm font-bold text-slate-800 pointer-events-none">Drag &amp; Drop your files here</p>
+                  <p class="text-xs font-semibold text-blue-600 mt-0.5 pointer-events-none">or click to browse</p>
+                  <p class="text-[11px] text-slate-500 mt-1.5 pointer-events-none">Supports: JPG, PNG, WEBP, HEIC • Max Size: 50MB</p>
+                </div>
+              </div>
+
+              <!-- URL Upload Panel -->
+              <div id="urlUploadPanel" class="hidden space-y-3">
+                <textarea
+                  id="urlTextarea"
+                  rows="4"
+                  placeholder="Har line me ek direct image URL paste karein:&#10;https://example.com/photo1.jpg&#10;https://example.com/photo2.png"
+                  class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                ></textarea>
+                <button id="addUrlsBtn" type="button" class="px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition">
+                  Queue me Add Karein
+                </button>
+              </div>
+
+              <!-- Auto Message & Link Panel -->
+              <div id="msgUploadPanel" class="hidden space-y-3">
+                <div>
+                  <label for="autoMsgTextarea" class="block text-xs font-semibold text-slate-700 mb-1">Auto Message Text</label>
+                  <textarea
+                    id="autoMsgTextarea"
+                    rows="3"
+                    placeholder="Apna auto message likhein... (jaise: New HD Collection live!)"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  ></textarea>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label for="msgLinkUrlInput" class="block text-xs font-semibold text-slate-700 mb-1">Link URL (Optional)</label>
+                    <input
+                      id="msgLinkUrlInput"
+                      type="url"
+                      placeholder="https://example.com ya https://t.me/..."
+                      class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label for="msgLinkLabelInput" class="block text-xs font-semibold text-slate-700 mb-1">Link Button Name (Optional)</label>
+                    <input
+                      id="msgLinkLabelInput"
+                      type="text"
+                      placeholder="Jaise: Open Link / Download Now"
+                      class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <label class="inline-flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+                    <input id="msgPreviewCheckbox" type="checkbox" checked class="w-4 h-4 accent-blue-600 rounded" />
+                    <span>Link preview dikhayein</span>
+                  </label>
+                  <button id="addMsgBtn" type="button" class="px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition">
+                    Auto Msg Queue me Add Karein
+                  </button>
+                </div>
+              </div>
+
+              <!-- Queue Header -->
+              <div class="pt-3 border-t border-slate-200/70 space-y-2.5">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="text-xs font-bold text-slate-800">
+                    Post Queue (<span id="queueCount">0</span>)
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <button id="resetQueueStatusBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">
+                      Reset Sent
+                    </button>
+                    <button id="clearQueueBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 transition">
+                      Clear All
+                    </button>
+                  </div>
+                </div>
+                <div id="queueAlertBanner" class="hidden rounded-2xl border border-amber-300 bg-amber-50 px-3.5 py-2.5 text-xs font-medium text-amber-900"></div>
+              </div>
+
+              <!-- Queue List -->
+              <div id="queueList" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+                <div class="text-center py-6 text-xs text-slate-400">
+                  Abhi koi photo add nahi ki gayi hai. Upar se photos select karein.
+                </div>
+              </div>
+            </section>
+
+            <!-- Card 4: YouTube New Video Auto-Share -->
+            <section class="pastel-card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-2xl bg-red-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-slate-900 leading-tight">YouTube New Video Auto-Share</h2>
+                    <p class="text-[11px] text-slate-500">Share new uploads automatically to Telegram</p>
+                  </div>
+                </div>
+                <span id="ytStatusBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
+                  <span id="ytStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                  <span id="ytStatusText">Off</span>
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="ytChannelInput" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                    YouTube Channel Link <span class="text-rose-500">*</span>
+                  </label>
+                  <input
+                    id="ytChannelInput"
+                    type="text"
+                    placeholder="https://www.youtube.com/@yourchannel/videos"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
+                  />
+                  <p class="text-[10px] text-slate-500 mt-1">Bina login / bina API key — seedha channel link paste karein</p>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="ytIntervalInput" class="text-xs font-semibold text-slate-700">
+                      Fast Check Gap (Seconds)
+                    </label>
+                    <span id="ytIntervalHuman" class="text-[11px] font-bold text-red-600">30 sec</span>
+                  </div>
+                  <input
+                    id="ytIntervalInput"
+                    type="number"
+                    min="10"
+                    max="3600"
+                    value="30"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
+                  />
+                  <div class="flex flex-wrap gap-1 mt-1.5">
+                    <button type="button" data-yt-sec="15" class="yt-preset-btn px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">15s</button>
+                    <button type="button" data-yt-sec="30" class="yt-preset-btn px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-red-600 text-white">30s</button>
+                    <button type="button" data-yt-sec="60" class="yt-preset-btn px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">1 min</button>
+                    <button type="button" data-yt-sec="120" class="yt-preset-btn px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">2 min</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label for="ytTemplateInput" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Telegram Message Template
+                </label>
+                <textarea
+                  id="ytTemplateInput"
+                  rows="2"
+                  class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
+                >New YouTube Video Uploaded!
+{title}
+{url}</textarea>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <label class="inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+                    <input id="ytWatchBtnCheckbox" type="checkbox" checked class="w-4 h-4 accent-blue-600 rounded" />
+                    <span>"Watch on YouTube" clickable button lagayein</span>
+                  </label>
+                  <label class="inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+                    <input id="ytFreshOnlyCheckbox" type="checkbox" checked class="w-4 h-4 accent-blue-600 rounded" />
+                    <span>Sirf naye uploads / live bhejein (purane skip)</span>
+                  </label>
+                </div>
+                <details class="rounded-2xl border border-slate-200/80 bg-slate-50/70 px-3.5 py-2.5">
+                  <summary class="text-xs font-semibold text-slate-700 cursor-pointer select-none">Advanced Options (Optional YouTube API Key)</summary>
+                  <div class="mt-2">
+                    <input
+                      id="ytApiKeyInput"
+                      type="password"
+                      placeholder="AIzaSy... (khali chhod dein — bina key ke direct link se chalega)"
+                      autocomplete="off"
+                      class="w-full rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+                </details>
+                <div id="ytLastVideoInfo" class="text-[11px] font-medium text-slate-600 truncate"></div>
+              </div>
+
+              <div id="ytAlertBanner" class="hidden rounded-2xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900"></div>
+            </section>
+
+            <!-- Card 5: Dark Terminal Live Activity Log -->
+            <section class="rounded-3xl bg-slate-950 border border-slate-800 shadow-xl p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                  </svg>
+                  <span>Live Activity Log</span>
+                </h2>
+                <button id="clearLogBtn" type="button" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                  <span>Clear Log</span>
+                </button>
+              </div>
+              <div id="activityLog" class="bg-slate-900/70 text-slate-200 rounded-2xl p-3.5 font-mono text-xs h-44 overflow-y-auto space-y-1.5 border border-slate-800/80">
+                <div class="text-emerald-400">[Ready] Bot Token aur Channel ID daalein, photos add karein, aur Test ya Start dabaiye.</div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
     </div>
-  </main>
+  </div>
 
   <script>
     (function () {
@@ -938,9 +1154,9 @@
         const selected = getRunMode();
         document.querySelectorAll('[data-run-card]').forEach((card) => {
           if (card.getAttribute('data-run-card') === selected) {
-            card.className = 'flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-900 text-xs font-bold cursor-pointer text-center transition';
+            card.className = 'flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full border border-blue-500 bg-blue-50 text-blue-700 text-xs font-bold cursor-pointer text-center shadow-xs transition';
           } else {
-            card.className = 'flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold cursor-pointer text-center transition';
+            card.className = 'flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full border border-slate-200/80 bg-white/80 text-slate-600 hover:border-blue-300 hover:text-slate-900 text-xs font-semibold cursor-pointer text-center transition';
           }
         });
       }
@@ -959,9 +1175,9 @@
         document.querySelectorAll('.preset-btn').forEach((btn) => {
           const preset = parseInt(btn.getAttribute('data-preset-sec'), 10);
           if (preset === sec) {
-            btn.className = 'preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-sky-600 text-white';
+            btn.className = 'preset-btn px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white shadow-xs transition';
           } else {
-            btn.className = 'preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200';
+            btn.className = 'preset-btn px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
           }
         });
       }
@@ -969,14 +1185,14 @@
       function updateStatusUI(modeText, tone) {
         el.statusText.textContent = modeText;
         if (tone === 'running') {
-          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700';
+          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs';
           el.statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
         } else if (tone === 'error') {
-          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700';
+          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/80 shadow-xs';
           el.statusDot.className = 'w-2 h-2 rounded-full bg-rose-500';
         } else {
-          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600';
-          el.statusDot.className = 'w-2 h-2 rounded-full bg-slate-400';
+          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 shadow-xs';
+          el.statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
         }
       }
 
@@ -1455,23 +1671,23 @@
       function syncMasterButtons() {
         const anyActive = state.isRunning || state.ytRunning;
         if (anyActive) {
-          el.masterToggleBtn.className = 'flex-1 px-5 py-3 rounded-xl bg-rose-600 text-white text-sm font-bold hover:bg-rose-700 transition shadow-sm flex items-center justify-center gap-2';
+          el.masterToggleBtn.className = 'px-6 py-3 rounded-full bg-rose-600 text-white text-sm font-bold hover:bg-rose-700 transition shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2';
           el.masterBtnIcon.innerHTML = '<rect x="6" y="6" width="12" height="12" rx="2"/>';
           if (state.isRunning && state.ytRunning) {
-            el.startBtnLabel.textContent = 'Stop Auto-Post (Photos + YouTube Live)';
+            el.startBtnLabel.textContent = 'Stop Auto-Post (Photos + YT)';
             updateStatusUI('Photos + YT Live', 'running');
           } else if (state.ytRunning) {
-            el.startBtnLabel.textContent = 'Stop YouTube Auto-Post (Live)';
+            el.startBtnLabel.textContent = 'Stop YouTube Auto-Post';
             updateStatusUI('YouTube Live', 'running');
           } else {
-            el.startBtnLabel.textContent = 'Stop Photo/Msg Auto-Post (Live)';
+            el.startBtnLabel.textContent = 'Stop Photo/Msg Auto-Post';
             updateStatusUI('Queue Live', 'running');
           }
         } else {
-          el.masterToggleBtn.className = 'flex-1 px-5 py-3 rounded-xl bg-sky-600 text-white text-sm font-bold hover:bg-sky-700 transition shadow-sm flex items-center justify-center gap-2';
+          el.masterToggleBtn.className = 'px-6 py-3 rounded-full bg-slate-950 text-white text-sm font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2';
           el.masterBtnIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-          el.startBtnLabel.textContent = 'Start Auto-Post & Link';
-          updateStatusUI('Ready', 'idle');
+          el.startBtnLabel.textContent = 'Start Auto-Post →';
+          updateStatusUI('Ready to Post', 'idle');
         }
       }
 
@@ -2232,10 +2448,13 @@
       function updateQualityCardsUI() {
         const selected = getSendMode();
         document.querySelectorAll('[data-mode-card]').forEach((card) => {
+          const check = card.querySelector('.mode-check-dot');
           if (card.getAttribute('data-mode-card') === selected) {
-            card.className = 'flex items-start gap-3 p-3 rounded-xl border border-sky-500 bg-sky-50/60 cursor-pointer transition';
+            card.className = 'relative flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl border-2 border-blue-500 bg-blue-50/70 cursor-pointer transition shadow-xs';
+            if (check) check.classList.remove('hidden');
           } else {
-            card.className = 'flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:border-slate-300 cursor-pointer transition';
+            card.className = 'relative flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl border border-slate-200/90 bg-slate-50/60 hover:border-blue-300 cursor-pointer transition';
+            if (check) check.classList.add('hidden');
           }
         });
       }
@@ -2462,6 +2681,77 @@
       }
       if (el.lightModeBtn) el.lightModeBtn.addEventListener('click', () => applyTheme('light', true));
       if (el.darkModeBtn) el.darkModeBtn.addEventListener('click', () => applyTheme('dark', true));
+
+      // ===================== SIDEBAR & ABOUT MODAL =====================
+      const navDashboardBtn = document.getElementById('navDashboardBtn');
+      const navSettingsBtn = document.getElementById('navSettingsBtn');
+      const navGuideBtn = document.getElementById('navGuideBtn');
+      const navAboutBtn = document.getElementById('navAboutBtn');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+      const appSidebar = document.getElementById('appSidebar');
+      const aboutModal = document.getElementById('aboutModal');
+      const closeAboutBtn = document.getElementById('closeAboutBtn');
+      const doneAboutBtn = document.getElementById('doneAboutBtn');
+
+      function closeMobileSidebar() {
+        if (appSidebar) appSidebar.classList.add('-translate-x-full');
+        if (sidebarBackdrop) sidebarBackdrop.classList.add('hidden');
+      }
+
+      function openMobileSidebar() {
+        if (appSidebar) appSidebar.classList.remove('-translate-x-full');
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove('hidden');
+      }
+
+      if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileSidebar);
+      if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
+      if (navDashboardBtn) {
+        navDashboardBtn.addEventListener('click', () => {
+          closeMobileSidebar();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+      if (navSettingsBtn) {
+        navSettingsBtn.addEventListener('click', () => {
+          closeMobileSidebar();
+          openSettingsModal();
+        });
+      }
+      if (navGuideBtn) {
+        navGuideBtn.addEventListener('click', () => {
+          closeMobileSidebar();
+          if (el.helpPanel) {
+            el.helpPanel.classList.remove('hidden');
+            el.helpPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+      function openAboutModal() {
+        if (aboutModal) aboutModal.classList.remove('hidden');
+      }
+      function closeAboutModal() {
+        if (aboutModal) aboutModal.classList.add('hidden');
+      }
+      if (navAboutBtn) {
+        navAboutBtn.addEventListener('click', () => {
+          closeMobileSidebar();
+          openAboutModal();
+        });
+      }
+      if (closeAboutBtn) closeAboutBtn.addEventListener('click', closeAboutModal);
+      if (doneAboutBtn) doneAboutBtn.addEventListener('click', closeAboutModal);
+      if (aboutModal) {
+        aboutModal.addEventListener('click', (e) => {
+          if (e.target === aboutModal) closeAboutModal();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aboutModal && !aboutModal.classList.contains('hidden')) {
+          closeAboutModal();
+        }
+      });
 
       // ===================== INIT =====================
       loadTheme();
