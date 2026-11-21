@@ -5,14 +5,193 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Telegram HD Auto-Poster</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .drop-active {
       border-color: #2563eb !important;
       background-color: #eff6ff !important;
+    }
+
+    /* Dark Mode Overrides */
+    html.dark {
+      color-scheme: dark;
+    }
+    html.dark body {
+      background-color: #020617 !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark header,
+    html.dark section.bg-white,
+    html.dark #settingsCard {
+      background-color: #0f172a !important;
+      border-color: #1e293b !important;
+    }
+    html.dark section.border-sky-200 {
+      border-color: #075985 !important;
+    }
+    html.dark #helpPanel {
+      background-color: rgba(12, 74, 110, 0.35) !important;
+      border-color: #0369a1 !important;
+    }
+    html.dark #helpPanel h2,
+    html.dark #helpPanel ol,
+    html.dark #helpPanel li {
+      color: #e0f2fe !important;
+    }
+    html.dark #helpPanel code {
+      background-color: rgba(15, 23, 42, 0.85) !important;
+      color: #7dd3fc !important;
+    }
+    html.dark .bg-white:not(button):not(label) {
+      background-color: #0f172a !important;
+    }
+    html.dark .bg-slate-50,
+    html.dark .bg-slate-50\/70,
+    html.dark .bg-slate-50\/50 {
+      background-color: #1e293b !important;
+    }
+    html.dark .bg-slate-100 {
+      background-color: #1e293b !important;
+    }
+    html.dark .bg-slate-200 {
+      background-color: #334155 !important;
+    }
+    html.dark .border-slate-100,
+    html.dark .border-slate-200 {
+      border-color: #334155 !important;
+    }
+    html.dark .border-slate-300 {
+      border-color: #475569 !important;
+    }
+    html.dark .text-slate-900,
+    html.dark .text-slate-800 {
+      color: #f1f5f9 !important;
+    }
+    html.dark .text-slate-700 {
+      color: #cbd5e1 !important;
+    }
+    html.dark .text-slate-600,
+    html.dark .text-slate-500 {
+      color: #94a3b8 !important;
+    }
+    html.dark .text-slate-400 {
+      color: #64748b !important;
+    }
+    html.dark input[type="text"],
+    html.dark input[type="password"],
+    html.dark input[type="number"],
+    html.dark input[type="url"],
+    html.dark textarea {
+      background-color: #020617 !important;
+      border-color: #334155 !important;
+      color: #f8fafc !important;
+    }
+    html.dark input::placeholder,
+    html.dark textarea::placeholder {
+      color: #64748b !important;
+    }
+    html.dark .bg-sky-50,
+    html.dark .bg-sky-50\/60 {
+      background-color: rgba(14, 165, 233, 0.16) !important;
+    }
+    html.dark .text-sky-900,
+    html.dark .text-sky-700 {
+      color: #7dd3fc !important;
+    }
+    html.dark .bg-red-50 {
+      background-color: rgba(239, 68, 68, 0.16) !important;
+    }
+    html.dark .text-red-700,
+    html.dark .text-red-600 {
+      color: #fca5a5 !important;
+    }
+    html.dark .bg-emerald-50 {
+      background-color: rgba(16, 185, 129, 0.16) !important;
+    }
+    html.dark .text-emerald-700 {
+      color: #6ee7b7 !important;
+    }
+    html.dark .bg-amber-50 {
+      background-color: rgba(245, 158, 11, 0.16) !important;
+    }
+    html.dark .text-amber-900 {
+      color: #fde68a !important;
+    }
+    html.dark .border-amber-300 {
+      border-color: #b45309 !important;
+    }
+    html.dark .bg-rose-50 {
+      background-color: rgba(244, 63, 94, 0.16) !important;
+    }
+    html.dark .text-rose-700,
+    html.dark .text-rose-600 {
+      color: #fda4af !important;
+    }
+    html.dark label[data-run-card].bg-white {
+      background-color: #1e293b !important;
+      color: #cbd5e1 !important;
+      border-color: #334155 !important;
+    }
+    html.dark label[data-run-card].bg-sky-50 {
+      background-color: rgba(14, 165, 233, 0.22) !important;
+      color: #e0f2fe !important;
+      border-color: #38bdf8 !important;
+    }
+    html.dark #tabDeviceBtn.bg-white,
+    html.dark #tabUrlBtn.bg-white,
+    html.dark #tabMsgBtn.bg-white {
+      background-color: #020617 !important;
+      color: #f8fafc !important;
+    }
+    html.dark #verifyBotBtn {
+      background-color: #0284c7 !important;
+      color: #ffffff !important;
+    }
+    html.dark #verifyBotBtn:hover {
+      background-color: #0369a1 !important;
+    }
+    html.dark #saveConfigBtn:hover,
+    html.dark #toggleTokenVisBtn:hover,
+    html.dark #downloadPyBtn:hover,
+    html.dark #resetQueueStatusBtn:hover {
+      background-color: #334155 !important;
+    }
+    html.dark .preset-btn.bg-slate-100:hover,
+    html.dark .yt-preset-btn.bg-slate-100:hover {
+      background-color: #334155 !important;
+    }
+    html.dark .drop-active {
+      border-color: #38bdf8 !important;
+      background-color: rgba(14, 165, 233, 0.18) !important;
+    }
+    html.dark #lightModeBtn.bg-white,
+    html.dark #darkModeBtn.bg-white {
+      background-color: #1e293b !important;
+      color: #cbd5e1 !important;
+      border-color: #334155 !important;
+    }
+    html.dark #lightModeBtn.bg-white:hover,
+    html.dark #darkModeBtn.bg-white:hover {
+      border-color: #475569 !important;
+    }
+    html.dark #lightModeBtn.bg-sky-50,
+    html.dark #darkModeBtn.bg-sky-50 {
+      background-color: rgba(14, 165, 233, 0.22) !important;
+      color: #e0f2fe !important;
+      border-color: #38bdf8 !important;
+    }
+    html.dark #activityLog {
+      background-color: #020617 !important;
+      border: 1px solid #1e293b;
     }
   </style>
 </head>
@@ -43,9 +222,83 @@
         <button id="toggleHelpBtn" type="button" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
           Setup Guide
         </button>
+        <button id="toggleSettingsBtn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition" aria-haspopup="dialog" aria-controls="settingsModal">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>Settings</span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <div id="settingsCard" class="w-full max-w-md rounded-2xl bg-white border border-slate-200 shadow-2xl p-5 space-y-5">
+      <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-200">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div>
+            <h2 id="settingsModalTitle" class="text-sm font-bold text-slate-900">App Settings</h2>
+            <p class="text-[11px] text-slate-500">Appearance aur display mode yahan se badlein</p>
+          </div>
+        </div>
+        <button id="closeSettingsBtn" type="button" class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 transition" aria-label="Close settings">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Appearance / Theme Setting -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div>
+            <div class="text-xs font-bold text-slate-900">Dark / Light Mode</div>
+            <div id="currentThemeLabel" class="text-[11px] text-slate-500 mt-0.5">Abhi Light Mode active hai</div>
+          </div>
+          <button
+            id="themeToggleBtn"
+            type="button"
+            role="switch"
+            aria-checked="false"
+            aria-label="Toggle Dark Mode"
+            class="relative inline-flex h-7 w-12 shrink-0 items-center rounded-full bg-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500"
+          >
+            <span id="themeToggleKnob" class="inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-1"></span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <button id="lightModeBtn" type="button" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-900 text-xs font-bold transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span>Light Mode</span>
+          </button>
+          <button id="darkModeBtn" type="button" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <span>Dark Mode</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-slate-200">
+        <span class="text-[11px] text-slate-500">Theme browser me auto-save hoti hai</span>
+        <button id="doneSettingsBtn" type="button" class="px-4 py-1.5 rounded-xl bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 transition">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
 
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
     <!-- Collapsible Setup Guide -->
@@ -554,6 +807,15 @@
         toggleHelpBtn: document.getElementById('toggleHelpBtn'),
         closeHelpBtn: document.getElementById('closeHelpBtn'),
         helpPanel: document.getElementById('helpPanel'),
+        toggleSettingsBtn: document.getElementById('toggleSettingsBtn'),
+        settingsModal: document.getElementById('settingsModal'),
+        closeSettingsBtn: document.getElementById('closeSettingsBtn'),
+        doneSettingsBtn: document.getElementById('doneSettingsBtn'),
+        themeToggleBtn: document.getElementById('themeToggleBtn'),
+        themeToggleKnob: document.getElementById('themeToggleKnob'),
+        lightModeBtn: document.getElementById('lightModeBtn'),
+        darkModeBtn: document.getElementById('darkModeBtn'),
+        currentThemeLabel: document.getElementById('currentThemeLabel'),
 
         botTokenInput: document.getElementById('botTokenInput'),
         toggleTokenVisBtn: document.getElementById('toggleTokenVisBtn'),
@@ -2209,7 +2471,83 @@ while True:
         el.activityLog.innerHTML = '<div class="text-slate-400">[Cleared] Log saaf kar diya gaya.</div>';
       });
 
+      // ===================== THEME & SETTINGS =====================
+      function applyTheme(theme, notify) {
+        const isDark = theme === 'dark';
+        document.documentElement.classList.toggle('dark', isDark);
+
+        if (el.themeToggleBtn && el.themeToggleKnob) {
+          el.themeToggleBtn.setAttribute('aria-checked', String(isDark));
+          el.themeToggleBtn.className = isDark
+            ? 'relative inline-flex h-7 w-12 shrink-0 items-center rounded-full bg-sky-600 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500'
+            : 'relative inline-flex h-7 w-12 shrink-0 items-center rounded-full bg-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500';
+          el.themeToggleKnob.className = isDark
+            ? 'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-6'
+            : 'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-1';
+        }
+
+        if (el.currentThemeLabel) {
+          el.currentThemeLabel.textContent = isDark ? 'Abhi Dark Mode active hai' : 'Abhi Light Mode active hai';
+        }
+
+        if (el.lightModeBtn && el.darkModeBtn) {
+          const activeCls = 'flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-900 text-xs font-bold transition';
+          const idleCls = 'flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-slate-300 text-xs font-semibold transition';
+          el.lightModeBtn.className = isDark ? idleCls : activeCls;
+          el.darkModeBtn.className = isDark ? activeCls : idleCls;
+        }
+
+        try {
+          localStorage.setItem('tg_autoposter_theme', isDark ? 'dark' : 'light');
+        } catch (e) {}
+
+        if (notify) {
+          showToast(isDark ? 'Dark Mode ON ho gaya!' : 'Light Mode ON ho gaya!', 'info');
+        }
+      }
+
+      function loadTheme() {
+        let saved = 'light';
+        try {
+          const v = localStorage.getItem('tg_autoposter_theme');
+          if (v === 'dark' || v === 'light') saved = v;
+        } catch (e) {}
+        applyTheme(saved, false);
+      }
+
+      function openSettingsModal() {
+        if (el.settingsModal) el.settingsModal.classList.remove('hidden');
+      }
+
+      function closeSettingsModal() {
+        if (el.settingsModal) el.settingsModal.classList.add('hidden');
+      }
+
+      if (el.toggleSettingsBtn) el.toggleSettingsBtn.addEventListener('click', openSettingsModal);
+      if (el.closeSettingsBtn) el.closeSettingsBtn.addEventListener('click', closeSettingsModal);
+      if (el.doneSettingsBtn) el.doneSettingsBtn.addEventListener('click', closeSettingsModal);
+      if (el.settingsModal) {
+        el.settingsModal.addEventListener('click', (e) => {
+          if (e.target === el.settingsModal) closeSettingsModal();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && el.settingsModal && !el.settingsModal.classList.contains('hidden')) {
+          closeSettingsModal();
+        }
+      });
+
+      if (el.themeToggleBtn) {
+        el.themeToggleBtn.addEventListener('click', () => {
+          const next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(next, true);
+        });
+      }
+      if (el.lightModeBtn) el.lightModeBtn.addEventListener('click', () => applyTheme('light', true));
+      if (el.darkModeBtn) el.darkModeBtn.addEventListener('click', () => applyTheme('dark', true));
+
       // ===================== INIT =====================
+      loadTheme();
       loadConfig();
       loadYtPostedIds();
       updateIntervalUI();
