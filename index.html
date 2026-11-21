@@ -153,7 +153,8 @@
     html.dark .bg-amber-50 {
       background-color: rgba(245, 158, 11, 0.18) !important;
     }
-    html.dark .text-amber-900 {
+    html.dark .text-amber-900,
+    html.dark .text-amber-700 {
       color: #fde68a !important;
     }
     html.dark .border-amber-300 {
@@ -181,16 +182,6 @@
     html.dark #testOneBtn:hover {
       background-color: #334155 !important;
     }
-    html.dark #toggleHelpBtn,
-    html.dark #toggleSettingsBtn {
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-      border-color: #334155 !important;
-    }
-    html.dark #toggleHelpBtn:hover,
-    html.dark #toggleSettingsBtn:hover {
-      background-color: #334155 !important;
-    }
     html.dark label[data-run-card].bg-white\/80 {
       background-color: #1e293b !important;
       color: #cbd5e1 !important;
@@ -202,8 +193,7 @@
       border-color: #60a5fa !important;
     }
     html.dark #tabDeviceBtn.bg-white,
-    html.dark #tabUrlBtn.bg-white,
-    html.dark #tabMsgBtn.bg-white {
+    html.dark #tabUrlBtn.bg-white {
       background-color: #020617 !important;
       color: #f8fafc !important;
     }
@@ -315,39 +305,15 @@
 
     <!-- Main Workspace Area -->
     <div class="flex-1 min-w-0 hero-glow">
-      <!-- Top Utility Bar -->
-      <header class="sticky top-0 z-30 px-4 sm:px-8 py-3.5 backdrop-blur-md bg-white/50 border-b border-white/60">
-        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center gap-2.5">
-            <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 rounded-xl bg-white/90 border border-slate-200 text-slate-700 hover:bg-slate-100 transition" aria-label="Open menu">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-              </svg>
-            </button>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/70">
-              <span>⚡</span>
-              <span>Smart Auto-Posting Tool</span>
-            </span>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <span id="statusBadge" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 shadow-xs">
-              <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span id="statusText">Ready to Post</span>
-            </span>
-            <button id="toggleHelpBtn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-blue-50 hover:text-blue-700 shadow-xs transition">
-              <svg class="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
-              <span>Setup Guide</span>
-            </button>
-            <button id="toggleSettingsBtn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100 shadow-xs transition" aria-haspopup="dialog" aria-controls="settingsModal">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span class="hidden sm:inline">Settings</span>
-            </button>
-          </div>
-        </div>
+      <!-- Mobile Top Bar (Menu Trigger Only) -->
+      <header class="lg:hidden sticky top-0 z-30 px-4 py-3 backdrop-blur-md bg-white/60 border-b border-white/60 flex items-center justify-between">
+        <button id="mobileMenuBtn" type="button" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/90 border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition" aria-label="Open menu">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <span>Menu</span>
+        </button>
+        <span class="text-xs font-extrabold text-slate-800">Telegram HD Auto-Poster</span>
       </header>
 
       <!-- Settings Modal -->
@@ -464,6 +430,16 @@
         <section class="relative overflow-hidden rounded-3xl p-5 sm:p-7">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             <div class="lg:col-span-7 space-y-4 relative z-10">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/70">
+                  <span>⚡</span>
+                  <span>Smart Auto-Posting Tool</span>
+                </span>
+                <span id="statusBadge" class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200/90 shadow-xs transition-colors">
+                  <span id="statusDot" class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.85)]"></span>
+                  <span id="statusText">Not Working</span>
+                </span>
+              </div>
               <div>
                 <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
                   Telegram HD<br />
@@ -747,7 +723,7 @@
                   </div>
                   <div>
                     <h2 class="text-sm font-bold text-slate-900 leading-tight">Upload &amp; Post Media</h2>
-                    <p class="text-[11px] text-slate-500">Add HD photos, image URLs or auto messages</p>
+                    <p class="text-[11px] text-slate-500">Add HD photos or direct image URLs</p>
                   </div>
                 </div>
                 <div class="inline-flex rounded-full bg-slate-100 p-1 flex-wrap">
@@ -756,9 +732,6 @@
                   </button>
                   <button id="tabUrlBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900">
                     Image URLs
-                  </button>
-                  <button id="tabMsgBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900">
-                    Auto Msg / Link
                   </button>
                 </div>
               </div>
@@ -796,48 +769,6 @@
                 <button id="addUrlsBtn" type="button" class="px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition">
                   Queue me Add Karein
                 </button>
-              </div>
-
-              <!-- Auto Message & Link Panel -->
-              <div id="msgUploadPanel" class="hidden space-y-3">
-                <div>
-                  <label for="autoMsgTextarea" class="block text-xs font-semibold text-slate-700 mb-1">Auto Message Text</label>
-                  <textarea
-                    id="autoMsgTextarea"
-                    rows="3"
-                    placeholder="Apna auto message likhein... (jaise: New HD Collection live!)"
-                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></textarea>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div>
-                    <label for="msgLinkUrlInput" class="block text-xs font-semibold text-slate-700 mb-1">Link URL (Optional)</label>
-                    <input
-                      id="msgLinkUrlInput"
-                      type="url"
-                      placeholder="https://example.com ya https://t.me/..."
-                      class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label for="msgLinkLabelInput" class="block text-xs font-semibold text-slate-700 mb-1">Link Button Name (Optional)</label>
-                    <input
-                      id="msgLinkLabelInput"
-                      type="text"
-                      placeholder="Jaise: Open Link / Download Now"
-                      class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <label class="inline-flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
-                    <input id="msgPreviewCheckbox" type="checkbox" checked class="w-4 h-4 accent-blue-600 rounded" />
-                    <span>Link preview dikhayein</span>
-                  </label>
-                  <button id="addMsgBtn" type="button" class="px-4 py-2 rounded-full bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition">
-                    Auto Msg Queue me Add Karein
-                  </button>
-                </div>
               </div>
 
               <!-- Queue Header -->
@@ -1014,10 +945,8 @@
         statusBadge: document.getElementById('statusBadge'),
         statusDot: document.getElementById('statusDot'),
         statusText: document.getElementById('statusText'),
-        toggleHelpBtn: document.getElementById('toggleHelpBtn'),
         closeHelpBtn: document.getElementById('closeHelpBtn'),
         helpPanel: document.getElementById('helpPanel'),
-        toggleSettingsBtn: document.getElementById('toggleSettingsBtn'),
         settingsModal: document.getElementById('settingsModal'),
         closeSettingsBtn: document.getElementById('closeSettingsBtn'),
         doneSettingsBtn: document.getElementById('doneSettingsBtn'),
@@ -1045,19 +974,12 @@
 
         tabDeviceBtn: document.getElementById('tabDeviceBtn'),
         tabUrlBtn: document.getElementById('tabUrlBtn'),
-        tabMsgBtn: document.getElementById('tabMsgBtn'),
         deviceUploadPanel: document.getElementById('deviceUploadPanel'),
         urlUploadPanel: document.getElementById('urlUploadPanel'),
-        msgUploadPanel: document.getElementById('msgUploadPanel'),
         dropZone: document.getElementById('dropZone'),
         fileInput: document.getElementById('fileInput'),
         urlTextarea: document.getElementById('urlTextarea'),
         addUrlsBtn: document.getElementById('addUrlsBtn'),
-        autoMsgTextarea: document.getElementById('autoMsgTextarea'),
-        msgLinkUrlInput: document.getElementById('msgLinkUrlInput'),
-        msgLinkLabelInput: document.getElementById('msgLinkLabelInput'),
-        msgPreviewCheckbox: document.getElementById('msgPreviewCheckbox'),
-        addMsgBtn: document.getElementById('addMsgBtn'),
 
         queueCount: document.getElementById('queueCount'),
         queueList: document.getElementById('queueList'),
@@ -1185,14 +1107,27 @@
       function updateStatusUI(modeText, tone) {
         el.statusText.textContent = modeText;
         if (tone === 'running') {
-          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs';
-          el.statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
-        } else if (tone === 'error') {
-          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/80 shadow-xs';
-          el.statusDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+          el.statusBadge.className = 'inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/90 shadow-xs transition-colors';
+          el.statusDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_9px_rgba(16,185,129,0.9)] animate-pulse';
+        } else if (tone === 'ready') {
+          el.statusBadge.className = 'inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-300/90 shadow-xs transition-colors';
+          el.statusDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_9px_rgba(251,191,36,0.95)]';
         } else {
-          el.statusBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-700 border border-slate-200/80 shadow-xs';
-          el.statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+          el.statusBadge.className = 'inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200/90 shadow-xs transition-colors';
+          el.statusDot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.85)]';
+        }
+      }
+
+      function refreshIdleStatus() {
+        if (state.isRunning || state.ytRunning) return;
+        const hasToken = el.botTokenInput.value.trim().includes(':');
+        const hasChannel = el.channelIdInput.value.trim().length > 0;
+        const hasQueueReady = state.queue.some((i) => i.status === 'pending' || i.status === 'error');
+        const hasYtReady = el.ytChannelInput.value.trim().length > 0;
+        if (hasToken && hasChannel && (hasQueueReady || hasYtReady)) {
+          updateStatusUI('Ready to Post', 'ready');
+        } else {
+          updateStatusUI('Not Working', 'stopped');
         }
       }
 
@@ -1204,6 +1139,7 @@
         el.progressStats.textContent = `${sent} / ${total} items posted`;
         el.progressPercent.textContent = `${pct}%`;
         el.progressBar.style.width = `${pct}%`;
+        refreshIdleStatus();
       }
 
       function renderQueue() {
@@ -1687,7 +1623,7 @@
           el.masterToggleBtn.className = 'px-6 py-3 rounded-full bg-slate-950 text-white text-sm font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2';
           el.masterBtnIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
           el.startBtnLabel.textContent = 'Start Auto-Post →';
-          updateStatusUI('Ready to Post', 'idle');
+          refreshIdleStatus();
         }
       }
 
@@ -1818,42 +1754,6 @@
         maybeAutoStartQueueOnNewItem();
       }
 
-      function addAutoMessage() {
-        const text = el.autoMsgTextarea.value.trim();
-        const linkUrl = el.msgLinkUrlInput.value.trim();
-        const linkLabel = el.msgLinkLabelInput.value.trim();
-
-        if (!text && !linkUrl) {
-          showToast('Message text ya Link URL me se kam se kam ek cheez daalein.', 'error');
-          return;
-        }
-        if (linkUrl && !linkUrl.startsWith('http://') && !linkUrl.startsWith('https://')) {
-          showToast('Link URL https:// ya http:// se start hona chahiye.', 'error');
-          return;
-        }
-
-        const previewLabel = text ? text.slice(0, 32) : linkUrl.slice(0, 32);
-        state.queue.push({
-          id: state.nextId++,
-          type: 'message',
-          name: previewLabel,
-          sizeBytes: 0,
-          caption: text || linkUrl,
-          linkUrl,
-          linkLabel,
-          disablePreview: !el.msgPreviewCheckbox.checked,
-          status: 'pending',
-          errorMsg: ''
-        });
-
-        el.autoMsgTextarea.value = '';
-        el.msgLinkUrlInput.value = '';
-        el.msgLinkLabelInput.value = '';
-        renderQueue();
-        addLog(`Auto Message queue me add ho gaya: "${previewLabel}"`, 'info');
-        showToast('Auto Message added to queue!', 'success');
-        maybeAutoStartQueueOnNewItem();
-      }
 
       // ===================== YOUTUBE AUTO-NOTIFIER =====================
       function showYtAlert(msg) {
@@ -2460,7 +2360,6 @@
       }
 
       // ===================== EVENT LISTENERS =====================
-      el.toggleHelpBtn.addEventListener('click', () => el.helpPanel.classList.toggle('hidden'));
       el.closeHelpBtn.addEventListener('click', () => el.helpPanel.classList.add('hidden'));
 
       el.toggleTokenVisBtn.addEventListener('click', () => {
@@ -2484,19 +2383,16 @@
       });
 
       function switchAddTab(active) {
-        const activeCls = 'px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm';
-        const idleCls = 'px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900';
+        const activeCls = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-900 shadow-xs';
+        const idleCls = 'px-3 py-1 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900';
         el.deviceUploadPanel.classList.toggle('hidden', active !== 'device');
         el.urlUploadPanel.classList.toggle('hidden', active !== 'url');
-        el.msgUploadPanel.classList.toggle('hidden', active !== 'msg');
         el.tabDeviceBtn.className = active === 'device' ? activeCls : idleCls;
         el.tabUrlBtn.className = active === 'url' ? activeCls : idleCls;
-        el.tabMsgBtn.className = active === 'msg' ? activeCls : idleCls;
       }
 
       el.tabDeviceBtn.addEventListener('click', () => switchAddTab('device'));
       el.tabUrlBtn.addEventListener('click', () => switchAddTab('url'));
-      el.tabMsgBtn.addEventListener('click', () => switchAddTab('msg'));
 
       el.fileInput.addEventListener('change', (e) => {
         addFiles(e.target.files);
@@ -2525,7 +2421,6 @@
       });
 
       el.addUrlsBtn.addEventListener('click', addUrls);
-      el.addMsgBtn.addEventListener('click', addAutoMessage);
 
       el.resetQueueStatusBtn.addEventListener('click', () => {
         state.queue.forEach((i) => {
@@ -2659,7 +2554,6 @@
         if (el.settingsModal) el.settingsModal.classList.add('hidden');
       }
 
-      if (el.toggleSettingsBtn) el.toggleSettingsBtn.addEventListener('click', openSettingsModal);
       if (el.closeSettingsBtn) el.closeSettingsBtn.addEventListener('click', closeSettingsModal);
       if (el.doneSettingsBtn) el.doneSettingsBtn.addEventListener('click', closeSettingsModal);
       if (el.settingsModal) {
@@ -2760,8 +2654,13 @@
       updateIntervalUI();
       updateYtIntervalUI();
       updateQualityCardsUI();
+      el.botTokenInput.addEventListener('input', refreshIdleStatus);
+      el.channelIdInput.addEventListener('input', refreshIdleStatus);
+      el.ytChannelInput.addEventListener('input', refreshIdleStatus);
+
       updateRunModeUI();
       renderQueue();
+      refreshIdleStatus();
     })();
   </script>
 </body>
