@@ -25,6 +25,23 @@
       border-color: #2563eb !important;
       background-color: #eff6ff !important;
     }
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(4deg); }
+    }
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+      40% { transform: translateY(-4px); opacity: 1; }
+    }
+    @keyframes shimmerSlide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
+    }
+    .coming-float { animation: floatGentle 2.8s ease-in-out infinite; }
+    .coming-dot-1 { animation: dotBounce 1.4s ease-in-out infinite; }
+    .coming-dot-2 { animation: dotBounce 1.4s ease-in-out 0.2s infinite; }
+    .coming-dot-3 { animation: dotBounce 1.4s ease-in-out 0.4s infinite; }
+    .coming-shimmer { animation: shimmerSlide 2.2s ease-in-out infinite; }
 
     /* Dark Mode */
     html.dark { color-scheme: dark; }
@@ -91,7 +108,7 @@
           </div>
           <div class="min-w-0">
             <h1 class="text-sm sm:text-base font-extrabold tracking-tight leading-tight truncate">My Tools Hub</h1>
-            <p class="text-[11px] text-slate-500 truncate">Apna tool select karein</p>
+            <p class="text-[11px] text-slate-500 truncate">Select a tool to get started</p>
           </div>
         </div>
         <button id="homeThemeBtn" type="button" class="p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 transition" title="Dark / Light Mode" aria-label="Toggle Dark Mode">
@@ -108,7 +125,7 @@
     <main class="max-w-4xl w-full mx-auto px-4 py-8 space-y-6 flex-1">
       <div class="space-y-1">
         <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">Home</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Kisi bhi tool par click karein use open karne ke liye.</p>
+        <p class="text-xs sm:text-sm text-slate-500">Choose a tool below to open it.</p>
       </div>
 
       <!-- Tools Grid -->
@@ -128,7 +145,7 @@
             <div>
               <h3 class="text-base font-bold text-slate-900 group-hover:text-red-600 transition-colors">YouTube Video Auto Share</h3>
               <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                YouTube videos auto-share karein, Message/HD Photo/Link schedule karein aur Auto Photos queue chalayein.
+                Auto-share new YouTube videos, schedule messages, HD photos & links, or run an auto photo queue.
               </p>
             </div>
           </div>
@@ -138,15 +155,31 @@
           </div>
         </button>
 
-        <!-- Future Tool Slot Indicator -->
-        <div class="rounded-3xl border-2 border-dashed border-slate-200 p-5 flex flex-col items-center justify-center text-center gap-2 min-h-[190px] bg-slate-50/50">
-          <div class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+        <!-- Future Tool Slot: Coming Soon Animated Card -->
+        <div class="relative overflow-hidden rounded-3xl border-2 border-dashed border-blue-200 p-5 flex flex-col items-center justify-center text-center gap-3 min-h-[200px] bg-slate-50/70">
+          <!-- Floating Rocket / Sparkle Icon -->
+          <div class="coming-float w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shadow-xs">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
             </svg>
           </div>
-          <div class="text-xs font-bold text-slate-600">More Tools Slot</div>
-          <p class="text-[11px] text-slate-400 max-w-[200px]">Aage jo bhi naye tools aap add karwayenge, wo yahan cards ki tarah judte jayenge.</p>
+
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-1.5 text-sm font-extrabold text-slate-800">
+              <span>More Tools Coming Soon</span>
+              <span class="inline-flex items-center gap-0.5 pt-0.5" aria-hidden="true">
+                <span class="coming-dot-1 w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                <span class="coming-dot-2 w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                <span class="coming-dot-3 w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500 max-w-[210px] mx-auto">New tools are on the way and will appear here soon.</p>
+          </div>
+
+          <!-- Animated Progress Shimmer Bar -->
+          <div class="w-32 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+            <div class="coming-shimmer w-14 h-full rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"></div>
+          </div>
         </div>
       </div>
     </main>
@@ -169,7 +202,7 @@
         </div>
         <div class="min-w-0">
           <h1 class="text-sm sm:text-base font-extrabold tracking-tight leading-tight truncate">YouTube Video Auto Share</h1>
-          <div id="headerConnText" class="text-[11px] text-slate-500 truncate">Bot connect karein</div>
+          <div id="headerConnText" class="text-[11px] text-slate-500 truncate">Connect your bot</div>
         </div>
       </div>
 
@@ -224,7 +257,7 @@
         <span id="livePhotoChip" class="hidden px-2.5 py-1 rounded-full font-bold bg-blue-50 text-blue-700">Photo: --</span>
         <span id="liveYtChip" class="hidden px-2.5 py-1 rounded-full font-bold bg-red-50 text-red-700">YT: --</span>
       </div>
-      <span class="text-[11px] text-slate-500">Browser tab open rakhein — auto-send chalu hai</span>
+      <span class="text-[11px] text-slate-500">Keep this browser tab open — auto-send is active</span>
     </div>
   </div>
 
@@ -237,7 +270,7 @@
         <div class="flex items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">Schedule Post</h2>
-            <p class="text-xs text-slate-500">Message, Photo ya Link set karein — exact time aate hi apne aap send ho jayega</p>
+            <p class="text-xs text-slate-500">Schedule any message, photo, or link to send automatically at the exact time.</p>
           </div>
           <span id="schedStatusBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 shrink-0">
             <span id="schedStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
@@ -247,11 +280,11 @@
 
         <!-- Message / Caption -->
         <div>
-          <label for="schedMsgInput" class="block text-xs font-semibold text-slate-700 mb-1.5">Message ya Photo Caption</label>
+          <label for="schedMsgInput" class="block text-xs font-semibold text-slate-700 mb-1.5">Message or Photo Caption</label>
           <textarea
             id="schedMsgInput"
             rows="3"
-            placeholder="Yahan apna message likhein..."
+            placeholder="Write your message or caption here..."
             class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           ></textarea>
         </div>
@@ -265,20 +298,20 @@
               <select id="schedPhotoModeSelect" class="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 focus:outline-none">
                 <option value="document">100% HD File</option>
                 <option value="photo">Normal Photo</option>
-                <option value="both">Dono (Photo + HD)</option>
+                <option value="both">Both (Photo + HD)</option>
               </select>
             </div>
             <label class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-dashed border-blue-400 bg-white hover:bg-blue-50 text-blue-600 text-xs font-semibold cursor-pointer transition">
               <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
               </svg>
-              <span id="schedFileLabel" class="truncate">Gallery se Photo chunein</span>
+              <span id="schedFileLabel" class="truncate">Choose Photo from Device</span>
               <input id="schedFileInput" type="file" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.avif" class="sr-only" />
             </label>
             <input
               id="schedPhotoUrlInput"
               type="url"
-              placeholder="Ya Image URL paste karein (https://...)"
+              placeholder="Or paste an Image URL (https://...)"
               class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <div id="schedPhotoPreviewWrap" class="hidden flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-slate-200">
@@ -305,16 +338,16 @@
             <input
               id="schedLinkTextInput"
               type="text"
-              placeholder="Button naam (e.g. Open Link / Join)"
+              placeholder="Button label (e.g. Open Link / Join)"
               class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <p class="text-[11px] text-slate-500">Sirf link daal kar bhi schedule kar sakte hain.</p>
+            <p class="text-[11px] text-slate-500">You can also schedule a link on its own.</p>
           </div>
         </div>
 
         <!-- Date & Time Picker -->
         <div class="space-y-2.5 pt-1">
-          <label for="schedDateTimeInput" class="block text-xs font-semibold text-slate-700">Kab bhejna hai? (Date &amp; Time)</label>
+          <label for="schedDateTimeInput" class="block text-xs font-semibold text-slate-700">Schedule Date &amp; Time</label>
           <div class="flex flex-col sm:flex-row gap-2.5">
             <input
               id="schedDateTimeInput"
@@ -330,7 +363,7 @@
             <button type="button" data-sched-min="5" class="sched-quick-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+5 min</button>
             <button type="button" data-sched-min="15" class="sched-quick-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+15 min</button>
             <button type="button" data-sched-min="60" class="sched-quick-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+1 hour</button>
-            <button type="button" data-sched-tomorrow="9" class="sched-quick-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Kal 9:00 AM</button>
+            <button type="button" data-sched-tomorrow="9" class="sched-quick-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Tomorrow 9:00 AM</button>
           </div>
         </div>
 
@@ -347,7 +380,7 @@
         </div>
         <div id="scheduledList" class="space-y-2.5">
           <div class="text-center py-6 text-xs text-slate-400">
-            Abhi koi post schedule nahi hai.
+            No scheduled posts yet.
           </div>
         </div>
       </div>
@@ -358,8 +391,8 @@
       <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 class="text-base font-bold text-slate-900">Auto-Post Photos (Har Gap Par)</h2>
-            <p class="text-xs text-slate-500">Ek saath photos daalein aur har kuch minute me apne aap post karein</p>
+            <h2 class="text-base font-bold text-slate-900">Auto-Post Photos</h2>
+            <p class="text-xs text-slate-500">Upload multiple photos and post them automatically at fixed intervals.</p>
           </div>
           <div class="inline-flex rounded-full bg-slate-100 p-1">
             <button id="tabDeviceBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-900 shadow-xs">Gallery / PC</button>
@@ -371,13 +404,13 @@
         <div id="deviceUploadPanel">
           <div id="dropZone" class="relative border-2 border-dashed border-blue-300 rounded-2xl p-6 text-center hover:border-blue-500 transition cursor-pointer bg-blue-50/40">
             <input id="fileInput" type="file" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.heic,.heif,.avif" multiple class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" aria-label="Select photos" />
-            <p class="text-sm font-bold text-slate-800 pointer-events-none">Photos yahan drop karein ya click karein</p>
+            <p class="text-sm font-bold text-slate-800 pointer-events-none">Drag &amp; drop photos here, or click to browse</p>
             <p class="text-xs text-slate-500 mt-1 pointer-events-none">JPG, PNG, WEBP, HEIC • 100% HD supported</p>
           </div>
         </div>
 
         <div id="urlUploadPanel" class="hidden space-y-2.5">
-          <textarea id="urlTextarea" rows="3" placeholder="Har line me ek direct image URL paste karein:&#10;https://example.com/photo1.jpg" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <textarea id="urlTextarea" rows="3" placeholder="Paste one direct image URL per line:&#10;https://example.com/photo1.jpg" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
           <button id="addUrlsBtn" type="button" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition">Add URLs</button>
         </div>
 
@@ -388,12 +421,12 @@
             <select id="sendModeSelect" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="document">100% Original HD (No Compression)</option>
               <option value="photo">Normal Photo (Fast Preview)</option>
-              <option value="both">Dono (Preview + HD File)</option>
+              <option value="both">Both (Preview + HD File)</option>
             </select>
           </div>
           <div>
             <div class="flex items-center justify-between mb-1.5">
-              <label for="intervalInput" class="text-xs font-semibold text-slate-700">Har Post ka Gap (Seconds)</label>
+              <label for="intervalInput" class="text-xs font-semibold text-slate-700">Post Interval (Seconds)</label>
               <span id="intervalHumanLabel" class="text-xs font-bold text-blue-600">2 min</span>
             </div>
             <input id="intervalInput" type="number" min="5" max="86400" value="120" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -413,7 +446,7 @@
           <div class="mt-3 space-y-3">
             <div>
               <label for="defaultCaptionInput" class="block text-xs font-semibold text-slate-700 mb-1">Default Caption (Optional)</label>
-              <textarea id="defaultCaptionInput" rows="2" placeholder="Jaise: Join @yourchannel" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              <textarea id="defaultCaptionInput" rows="2" placeholder="e.g. Join @yourchannel" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <input id="btnTextInput" type="text" placeholder="Button text (e.g. Join Channel)" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -421,7 +454,7 @@
             </div>
             <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
               <input id="loopCheckbox" type="checkbox" class="w-4 h-4 accent-blue-600 rounded" />
-              <span>Saari photos hone par dobara loop chalayein</span>
+              <span>Loop queue automatically after all photos are sent</span>
             </label>
           </div>
         </details>
@@ -450,7 +483,7 @@
           </div>
         </div>
         <div id="queueList" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
-          <div class="text-center py-6 text-xs text-slate-400">Abhi koi photo add nahi hai.</div>
+          <div class="text-center py-6 text-xs text-slate-400">No photos in the queue yet.</div>
         </div>
       </div>
     </section>
@@ -461,7 +494,7 @@
         <div class="flex items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">YouTube Auto-Share</h2>
-            <p class="text-xs text-slate-500">Naya video upload hote hi Telegram channel par link bhej dega</p>
+            <p class="text-xs text-slate-500">Automatically shares new uploads to your Telegram channel.</p>
           </div>
           <span id="ytStatusBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 shrink-0">
             <span id="ytStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
@@ -476,7 +509,7 @@
           </div>
           <div>
             <div class="flex items-center justify-between mb-1.5">
-              <label for="ytIntervalInput" class="text-xs font-semibold text-slate-700">Check Gap (Seconds)</label>
+              <label for="ytIntervalInput" class="text-xs font-semibold text-slate-700">Check Interval (Seconds)</label>
               <span id="ytIntervalHuman" class="text-xs font-bold text-red-600">30s</span>
             </div>
             <input id="ytIntervalInput" type="number" min="10" max="3600" value="30" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500" />
@@ -505,10 +538,10 @@
               </label>
               <label class="inline-flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
                 <input id="ytFreshOnlyCheckbox" type="checkbox" checked class="w-4 h-4 accent-blue-600 rounded" />
-                <span>Sirf naye uploads bhejein</span>
+                <span>Only post new uploads</span>
               </label>
             </div>
-            <input id="ytApiKeyInput" type="password" placeholder="Optional YouTube API Key (khali chhod sakte hain)" autocomplete="off" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500" />
+            <input id="ytApiKeyInput" type="password" placeholder="Optional YouTube API Key (leave blank if not needed)" autocomplete="off" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500" />
           </div>
         </details>
 
@@ -532,7 +565,7 @@
         <div class="flex items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">Telegram Bot Setup</h2>
-            <p class="text-xs text-slate-500">Ek baar Bot Token aur Channel ID daal kar Save kar dein</p>
+            <p class="text-xs text-slate-500">Enter your Telegram Bot Token and Channel ID once, then save.</p>
           </div>
           <span id="botVerifiedBadge" class="hidden text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full"></span>
         </div>
@@ -544,12 +577,12 @@
               <input id="botTokenInput" type="password" placeholder="123456789:AAHxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
               <button id="toggleTokenVisBtn" type="button" class="px-4 rounded-2xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 shrink-0">Show</button>
             </div>
-            <p class="text-[11px] text-slate-500 mt-1">Token sirf aapke browser me safe rehta hai.</p>
+            <p class="text-[11px] text-slate-500 mt-1">Your token stays stored locally in your browser.</p>
           </div>
 
           <div>
-            <label for="channelIdInput" class="block text-xs font-semibold text-slate-700 mb-1.5">Channel Username ya ID</label>
-            <input id="channelIdInput" type="text" placeholder="@your_channel_username ya -1001234567890" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <label for="channelIdInput" class="block text-xs font-semibold text-slate-700 mb-1.5">Channel Username or ID</label>
+            <input id="channelIdInput" type="text" placeholder="@your_channel_username or -1001234567890" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
 
           <div class="flex flex-wrap gap-2 pt-1">
@@ -567,7 +600,7 @@
         <div class="flex items-center gap-2 min-w-0">
           <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
           <span class="text-xs font-bold text-slate-800 shrink-0">Activity Log</span>
-          <span id="latestLogLine" class="text-xs text-slate-500 truncate">Ready — Bot Setup karke schedule ya auto-post chalu karein.</span>
+          <span id="latestLogLine" class="text-xs text-slate-500 truncate">Ready — complete Bot Setup to start posting.</span>
         </div>
         <span class="text-[11px] font-semibold text-blue-600 shrink-0">View</span>
       </summary>
@@ -576,7 +609,7 @@
           <button id="clearLogBtn" type="button" class="text-xs font-semibold text-slate-500 hover:text-slate-900">Clear Log</button>
         </div>
         <div id="activityLog" class="bg-slate-950 text-slate-200 rounded-2xl p-3.5 font-mono text-xs h-36 overflow-y-auto space-y-1">
-          <div class="text-emerald-400">[Ready] Bot Token aur Channel ID daalein, phir Schedule ya Auto-Post use karein.</div>
+          <div class="text-emerald-400">[Ready] Enter your Bot Token and Channel ID in Bot Setup to begin.</div>
         </div>
       </div>
     </details>
@@ -594,13 +627,13 @@
         </button>
       </div>
       <ol class="text-xs text-slate-700 space-y-2 list-decimal list-inside leading-relaxed">
-        <li>Telegram me <strong>@BotFather</strong> par jaakar <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono">/newbot</code> bhejein aur apna <strong>Bot Token</strong> copy karein.</li>
-        <li>Apne Channel ke <strong>Administrators</strong> me bot ko add karein aur <strong>Post Messages</strong> ON karein.</li>
-        <li><strong>Bot Setup</strong> tab me Token aur <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono">@channel_username</code> (ya Private ID) daal kar Save karein.</li>
-        <li>Ab <strong>Schedule</strong>, <strong>Auto Photos</strong>, ya <strong>YouTube</strong> tab se seedha post karein!</li>
+        <li>Open <strong>@BotFather</strong> on Telegram, send <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono">/newbot</code>, and copy your <strong>Bot Token</strong>.</li>
+        <li>Add your bot as an <strong>Administrator</strong> in your Telegram channel with <strong>Post Messages</strong> enabled.</li>
+        <li>Paste your Bot Token and <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono">@channel_username</code> (or private channel ID) in the <strong>Bot Setup</strong> tab and click Save.</li>
+        <li>Start posting from the <strong>Schedule</strong>, <strong>Auto Photos</strong>, or <strong>YouTube</strong> tabs.</li>
       </ol>
       <div class="flex justify-end">
-        <button id="doneGuideBtn" type="button" class="px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700">Samajh gaya</button>
+        <button id="doneGuideBtn" type="button" class="px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700">Got it</button>
       </div>
     </div>
   </div>
@@ -814,7 +847,7 @@
           el.connDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
           el.connLabel.textContent = 'Connected';
         } else {
-          el.headerConnText.textContent = 'Bot Setup baki hai';
+          el.headerConnText.textContent = 'Bot setup required';
           el.connPillBtn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 hover:opacity-90 transition';
           el.connDot.className = 'w-2 h-2 rounded-full bg-amber-500';
           el.connLabel.textContent = 'Bot Setup';
@@ -889,14 +922,14 @@
         const token = el.botTokenInput.value.trim();
         const rawChannel = el.channelIdInput.value.trim();
         if (!token || !token.includes(':')) {
-          showToast('Pehle Bot Setup tab me valid Bot Token daalein.', 'error');
+          showToast('Please enter a valid Bot Token in the Bot Setup tab first.', 'error');
           switchMainTab('setup');
           el.botTokenInput.focus();
           return null;
         }
         const channel = normalizeChannelId(rawChannel);
         if (!channel) {
-          showToast('Pehle Bot Setup tab me Channel @username ya ID daalein.', 'error');
+          showToast('Please enter a Channel @username or ID in the Bot Setup tab first.', 'error');
           switchMainTab('setup');
           el.channelIdInput.focus();
           return null;
@@ -915,7 +948,7 @@
         if (!data.ok) {
           const desc = data.description || 'Unknown Telegram API error';
           if (data.error_code === 429 && data.parameters && data.parameters.retry_after) {
-            throw new Error(`Rate limit (429): ${data.parameters.retry_after}s wait karein.`);
+            throw new Error(`Rate limit (429): please wait ${data.parameters.retry_after}s.`);
           }
           throw new Error(desc);
         }
@@ -925,7 +958,7 @@
       async function verifyBot() {
         const token = el.botTokenInput.value.trim();
         if (!token || !token.includes(':')) {
-          showToast('Valid Bot Token daalein (jaise 123456:ABC...).', 'error');
+          showToast('Please enter a valid Bot Token (e.g. 123456:ABC...).', 'error');
           return;
         }
         el.verifyBotBtn.disabled = true;
@@ -956,7 +989,7 @@
       async function detectChannelId() {
         const token = el.botTokenInput.value.trim();
         if (!token || !token.includes(':')) {
-          showToast('Pehle valid Bot Token daalein.', 'error');
+          showToast('Please enter a valid Bot Token first.', 'error');
           return;
         }
         el.detectChannelBtn.disabled = true;
@@ -964,7 +997,7 @@
         try {
           const resp = await fetch(`https://api.telegram.org/bot${encodeURIComponent(token)}/getUpdates`);
           const data = await resp.json();
-          if (!data.ok) throw new Error(data.description || 'Updates nahi mile');
+          if (!data.ok) throw new Error(data.description || 'Could not fetch updates');
           const updates = data.result || [];
           let foundChat = null;
           for (let i = updates.length - 1; i >= 0; i--) {
@@ -982,9 +1015,9 @@
             el.channelIdInput.value = idVal;
             refreshHeaderConnection();
             addLog(`Channel detected: ${idVal}`, 'success');
-            showToast(`Channel mil gaya: ${idVal}`, 'success');
+            showToast(`Channel found: ${idVal}`, 'success');
           } else {
-            showToast('Channel me 1 test message bhej kar dobara try karein.', 'info');
+            showToast('Send a message in your channel first, then click Auto-Find ID again.', 'info');
           }
         } catch (err) {
           addLog(`Auto-Find error: ${err.message}`, 'error');
@@ -1080,7 +1113,7 @@
               photoMode: p.photoMode || 'document',
               scheduledAt: p.scheduledAt,
               status,
-              errorMsg: status === 'missed' ? 'Tab band tha — "Send Now" se abhi bhej sakte hain.' : (p.errorMsg || '')
+              errorMsg: status === 'missed' ? 'Missed while tab was closed — click "Send Now" to post it.' : (p.errorMsg || '')
             };
           });
           state.schedNextId = maxId + 1;
@@ -1100,12 +1133,12 @@
           el.schedPhotoPreviewImg.src = urlVal;
           el.schedPhotoPreviewName.textContent = urlVal.split('?')[0].split('/').pop() || 'Image URL';
           el.schedPhotoPreviewMeta.textContent = 'Image URL';
-          el.schedFileLabel.textContent = 'Gallery se Photo chunein';
+          el.schedFileLabel.textContent = 'Choose Photo from Device';
           el.schedPhotoPreviewWrap.classList.remove('hidden');
         } else {
           el.schedPhotoPreviewWrap.classList.add('hidden');
           el.schedPhotoPreviewImg.src = '';
-          el.schedFileLabel.textContent = 'Gallery se Photo chunein';
+          el.schedFileLabel.textContent = 'Choose Photo from Device';
         }
       }
 
@@ -1134,7 +1167,7 @@
         const creds = validateCredentials();
         if (!creds) {
           item.status = 'error';
-          item.errorMsg = 'Bot Setup me Token aur Channel ID daalein, phir Retry dabayein.';
+          item.errorMsg = 'Add your Bot Token and Channel ID in Bot Setup, then click Retry.';
           renderScheduledList();
           saveScheduledPostsToStorage();
           return false;
@@ -1194,12 +1227,12 @@
           renderScheduledList();
           saveScheduledPostsToStorage();
           addLog(`Scheduled post sent to ${creds.channel}!`, 'success');
-          showToast('Scheduled post send ho gaya!', 'success');
+          showToast('Scheduled post sent!', 'success');
           return true;
         } catch (err) {
           item.status = 'error';
           item.errorMsg = /Failed to fetch|NetworkError/i.test(err.message)
-            ? 'Network error — file ko Chrome me open karein ya internet check karein.'
+            ? 'Network error — check your internet connection or open this file directly in Chrome.'
             : err.message;
           renderScheduledList();
           saveScheduledPostsToStorage();
@@ -1225,7 +1258,7 @@
         refreshLiveBar();
 
         if (state.scheduledPosts.length === 0) {
-          el.scheduledList.innerHTML = '<div class="text-center py-6 text-xs text-slate-400">Abhi koi post schedule nahi hai.</div>';
+          el.scheduledList.innerHTML = '<div class="text-center py-6 text-xs text-slate-400">No scheduled posts yet.</div>';
           return;
         }
 
@@ -1338,25 +1371,25 @@
         const dtRaw = el.schedDateTimeInput.value;
 
         if (!text && !linkUrl && !file && !photoUrl) {
-          showSchedAlert('Kam se kam Message, Photo ya Link me se kuch daalein.');
+          showSchedAlert('Please add a message, photo, or link.');
           return;
         }
         if (linkUrl && !linkUrl.startsWith('http://') && !linkUrl.startsWith('https://')) {
-          showSchedAlert('Link URL https:// se shuru hona chahiye.');
+          showSchedAlert('Link URL must start with https:// or http://.');
           return;
         }
         if (!file && photoUrl && !photoUrl.startsWith('http://') && !photoUrl.startsWith('https://')) {
-          showSchedAlert('Image URL https:// se shuru hona chahiye.');
+          showSchedAlert('Image URL must start with https:// or http://.');
           return;
         }
         if (!dtRaw) {
-          showSchedAlert('Date aur Time select karein.');
+          showSchedAlert('Please select a date and time.');
           el.schedDateTimeInput.focus();
           return;
         }
         const scheduledAt = new Date(dtRaw).getTime();
         if (isNaN(scheduledAt) || scheduledAt <= Date.now() - 5000) {
-          showSchedAlert('Aane wala (future) time select karein.');
+          showSchedAlert('Please choose a future date and time.');
           return;
         }
 
@@ -1452,7 +1485,7 @@
         el.photoProgressText.textContent = `${sent} / ${total} sent`;
 
         if (total === 0) {
-          el.queueList.innerHTML = '<div class="text-center py-6 text-xs text-slate-400">Abhi koi photo add nahi hai.</div>';
+          el.queueList.innerHTML = '<div class="text-center py-6 text-xs text-slate-400">No photos in the queue yet.</div>';
           return;
         }
 
@@ -1606,8 +1639,8 @@
             renderQueue();
             next = state.queue[0];
           } else {
-            stopPhotoAutoPost('Saari photos post ho chuki hain!');
-            showToast('Saari photos post ho gayi!', 'success');
+            stopPhotoAutoPost('All photos have been posted!');
+            showToast('All photos posted!', 'success');
             return;
           }
         }
@@ -1618,7 +1651,7 @@
         if (!state.isRunning) return;
         if (!state.queue.find((i) => i.status === 'pending') && !el.loopCheckbox.checked) {
           stopPhotoAutoPost('Queue complete!');
-          showToast('Saari photos post ho gayi!', 'success');
+          showToast('All photos posted!', 'success');
           return;
         }
         state.countdownSeconds = getIntervalSeconds();
@@ -1629,7 +1662,7 @@
         showQueueAlert('');
         if (!validateCredentials()) return;
         if (state.queue.length === 0) {
-          showQueueAlert('Pehle kam se kam 1 photo add karein.');
+          showQueueAlert('Please add at least 1 photo first.');
           return;
         }
         state.queue.forEach((i) => { if (i.status === 'error') { i.status = 'pending'; i.errorMsg = ''; } });
@@ -1637,7 +1670,7 @@
           if (el.loopCheckbox.checked) {
             state.queue.forEach((i) => { i.status = 'pending'; i.errorMsg = ''; });
           } else {
-            showQueueAlert('Saari photos pehle hi Sent hain. Dobara bhejne ke liye "Reset Sent" dabayein.');
+            showQueueAlert('All photos are already sent. Click "Reset Sent" to post them again.');
             return;
           }
         }
@@ -1645,7 +1678,7 @@
         state.isRunning = true;
         syncPhotoButton();
         addLog(`Photo Auto-Post started (${getIntervalSeconds()}s gap).`, 'info');
-        showToast('Photo Auto-Post chalu ho gaya!', 'success');
+        showToast('Photo Auto-Post started!', 'success');
 
         if (state.timerId) clearInterval(state.timerId);
         processNextPhoto();
@@ -1664,7 +1697,7 @@
       function addFiles(fileList) {
         const files = Array.from(fileList || []).filter(isImageFile);
         if (files.length === 0) {
-          showToast('Sirf image files select karein.', 'error');
+          showToast('Please select image files only.', 'error');
           return;
         }
         files.forEach((file) => {
@@ -1688,7 +1721,7 @@
       function addUrls() {
         const lines = el.urlTextarea.value.split(/\r?\n/).map((l) => l.trim()).filter((l) => l.startsWith('http://') || l.startsWith('https://'));
         if (lines.length === 0) {
-          showToast('Valid https:// image URL paste karein.', 'error');
+          showToast('Please paste a valid https:// image URL.', 'error');
           return;
         }
         lines.forEach((url) => {
@@ -1835,7 +1868,7 @@
             if (chData.error) throw new Error(chData.error.message || 'YouTube API error');
             if (chData.items && chData.items[0]) channelId = chData.items[0].id;
           }
-          if (!channelId) throw new Error('YouTube channel nahi mila.');
+          if (!channelId) throw new Error('YouTube channel not found.');
           const plResp = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${encodeURIComponent('UU' + channelId.slice(2))}&maxResults=5&key=${encodeURIComponent(apiKey)}&_cb=${Date.now()}`, { cache: 'no-store' });
           const plData = await plResp.json();
           if (plData.error) throw new Error(plData.error.message || 'YouTube API error');
@@ -1869,7 +1902,7 @@
           const xmlItems = parseYouTubeAtomXml(xml);
           if (xmlItems && xmlItems.length) return xmlItems;
         }
-        throw new Error('YouTube channel load nahi ho paya. Thodi der baad try karein.');
+        throw new Error('Could not load the YouTube channel. Please try again shortly.');
       }
 
       async function sendYouTubeVideoToTelegram(video) {
@@ -1916,7 +1949,7 @@
         if (state.ytChecking) return false;
         const parsed = parseYtInput(el.ytChannelInput.value);
         if (!parsed) {
-          showYtAlert('Sahi YouTube channel link daalein (jaise https://www.youtube.com/@yourchannel).');
+          showYtAlert('Please enter a valid YouTube channel link (e.g. https://www.youtube.com/@yourchannel).');
           return false;
         }
         showYtAlert('');
@@ -1935,7 +1968,7 @@
             if (ok) {
               videos.forEach((v) => seenSet.add(v.videoId));
               saveYtPostedIds();
-              showToast('Latest YouTube video share ho gaya!', 'success');
+              showToast('Latest YouTube video shared!', 'success');
             }
             return true;
           }
@@ -1943,7 +1976,7 @@
           if (isBaseline || seenSet.size === 0) {
             videos.forEach((v) => seenSet.add(v.videoId));
             saveYtPostedIds();
-            addLog(`YouTube Watch ON: Ab sirf naye videos post honge.`, 'success');
+            addLog(`YouTube Watch active: only new uploads will be shared.`, 'success');
             return true;
           }
 
@@ -2011,19 +2044,19 @@
         state.ytRunning = false;
         if (state.ytTimerId) { clearInterval(state.ytTimerId); state.ytTimerId = null; }
         syncYtUI();
-        addLog('YouTube Watch band kar diya gaya.', 'warn');
+        addLog('YouTube Watch stopped.', 'warn');
       }
 
       async function startYouTubeWatch() {
         if (!validateCredentials()) return;
         if (!parseYtInput(el.ytChannelInput.value)) {
-          showYtAlert('Sahi YouTube channel link daalein.');
+          showYtAlert('Please enter a valid YouTube channel link.');
           return;
         }
         state.ytRunning = true;
         state.ytWatchStartedAt = Date.now();
         syncYtUI();
-        showToast('YouTube Auto-Watch chalu ho gaya!', 'success');
+        showToast('YouTube Auto-Watch started!', 'success');
 
         const ok = await checkYouTubeChannel(true, false);
         if (!ok) { stopYouTubeWatch(); return; }
@@ -2066,7 +2099,7 @@
           refreshHeaderConnection();
           showToast('Settings saved!', 'success');
         } catch (e) {
-          showToast('Settings active hain.', 'info');
+          showToast('Settings active for this session.', 'info');
         }
       }
 
@@ -2131,7 +2164,7 @@
       el.schedFileInput.addEventListener('change', (e) => {
         const f = e.target.files && e.target.files[0];
         if (!f) return;
-        if (!isImageFile(f)) { showToast('Sirf image file select karein.', 'error'); e.target.value = ''; return; }
+        if (!isImageFile(f)) { showToast('Please select an image file.', 'error'); e.target.value = ''; return; }
         if (state.schedPendingPreviewUrl) URL.revokeObjectURL(state.schedPendingPreviewUrl);
         state.schedPendingFile = f;
         state.schedPendingPreviewUrl = URL.createObjectURL(f);
@@ -2190,16 +2223,16 @@
         btn.addEventListener('click', () => { el.intervalInput.value = btn.getAttribute('data-preset-sec'); updateIntervalUI(); });
       });
       el.photoToggleBtn.addEventListener('click', () => {
-        if (state.isRunning) { stopPhotoAutoPost('Photo Auto-Post rok diya gaya.'); showToast('Auto-Post stopped.', 'info'); }
+        if (state.isRunning) { stopPhotoAutoPost('Photo Auto-Post stopped.'); showToast('Auto-Post stopped.', 'info'); }
         else startPhotoAutoPost();
       });
       el.testPhotoBtn.addEventListener('click', async () => {
         const next = state.queue.find((i) => i.status === 'pending') || state.queue[0];
-        if (!next) { showQueueAlert('Test ke liye kam se kam 1 photo add karein.'); return; }
+        if (!next) { showQueueAlert('Add at least 1 photo to test.'); return; }
         el.testPhotoBtn.disabled = true;
         el.testPhotoBtn.textContent = 'Sending...';
         const ok = await postSingleItem(next);
-        if (ok) showToast('Test photo send ho gaya!', 'success');
+        if (ok) showToast('Test photo sent!', 'success');
         el.testPhotoBtn.disabled = false;
         el.testPhotoBtn.textContent = 'Test 1 Post';
       });
@@ -2208,7 +2241,7 @@
         renderQueue();
       });
       el.clearQueueBtn.addEventListener('click', () => {
-        if (state.isRunning) stopPhotoAutoPost('Queue clear ho gayi.');
+        if (state.isRunning) stopPhotoAutoPost('Queue cleared.');
         state.queue.forEach((i) => { if (i.type === 'file' && i.previewUrl) URL.revokeObjectURL(i.previewUrl); });
         state.queue = [];
         renderQueue();
@@ -2245,7 +2278,7 @@
       el.channelIdInput.addEventListener('input', refreshHeaderConnection);
 
       el.clearLogBtn.addEventListener('click', () => {
-        el.activityLog.innerHTML = '<div class="text-slate-400">[Cleared] Log saaf kar diya gaya.</div>';
+        el.activityLog.innerHTML = '<div class="text-slate-400">[Cleared] Activity log cleared.</div>';
         el.latestLogLine.textContent = 'Log cleared.';
       });
 
