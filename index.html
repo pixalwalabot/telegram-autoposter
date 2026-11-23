@@ -9,22 +9,107 @@
     tailwind.config = { darkMode: 'class' };
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: #f8fafc;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(59, 130, 246, 0.10), transparent 38%),
+        radial-gradient(circle at 88% 12%, rgba(239, 68, 68, 0.08), transparent 36%),
+        radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.08), transparent 44%),
+        #f5f7fc;
+      background-attachment: fixed;
       color: #0f172a;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background-color 0.25s ease, color 0.2s ease;
     }
     .card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 10px -4px rgba(15, 23, 42, 0.06);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 10px 30px -14px rgba(15, 23, 42, 0.12), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.25s ease;
+    }
+    .tool-card-interactive:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 38px -14px rgba(239, 68, 68, 0.22), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
     }
     .drop-active {
       border-color: #2563eb !important;
       background-color: #eff6ff !important;
+      transform: scale(1.01);
     }
+
+    /* Scroll Progress Bar */
+    #scrollProgressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 60;
+      background: linear-gradient(90deg, #ef4444, #3b82f6, #8b5cf6);
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px) scale(0.985);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* View & Tab Switch Animation */
+    @keyframes viewEnter {
+      0% { opacity: 0; transform: translateY(12px) scale(0.99); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-view-enter {
+      animation: viewEnter 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Toast Slide Animation */
+    @keyframes toastIn {
+      0% { opacity: 0; transform: translateX(24px) scale(0.95); }
+      100% { opacity: 1; transform: translateX(0) scale(1); }
+    }
+    .animate-toast-in {
+      animation: toastIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Tactile Click Animation & Ripple */
+    button, .tool-card-interactive {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+    button:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+    .ripple-wave {
+      position: absolute;
+      border-radius: 9999px;
+      transform: scale(0);
+      background: rgba(255, 255, 255, 0.42);
+      pointer-events: none;
+      animation: rippleExpand 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .ripple-wave-dark {
+      background: rgba(59, 130, 246, 0.22);
+    }
+    @keyframes rippleExpand {
+      to { transform: scale(3.5); opacity: 0; }
+    }
+
+    /* Ambient Hero & Coming Soon Animations */
     @keyframes floatGentle {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-6px) rotate(4deg); }
@@ -37,21 +122,51 @@
       0% { transform: translateX(-100%); }
       100% { transform: translateX(250%); }
     }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
     .coming-float { animation: floatGentle 2.8s ease-in-out infinite; }
     .coming-dot-1 { animation: dotBounce 1.4s ease-in-out infinite; }
     .coming-dot-2 { animation: dotBounce 1.4s ease-in-out 0.2s infinite; }
     .coming-dot-3 { animation: dotBounce 1.4s ease-in-out 0.4s infinite; }
     .coming-shimmer { animation: shimmerSlide 2.2s ease-in-out infinite; }
+    .hero-gradient-text {
+      background: linear-gradient(90deg, #0f172a, #2563eb, #dc2626, #0f172a);
+      background-size: 240% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 7s ease infinite;
+    }
+    html.dark .hero-gradient-text {
+      background: linear-gradient(90deg, #f8fafc, #60a5fa, #f87171, #f8fafc);
+      background-size: 240% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     /* Dark Mode */
     html.dark { color-scheme: dark; }
-    html.dark body { background: #0b1120; color: #f1f5f9; }
+    html.dark body {
+      background:
+        radial-gradient(circle at 12% 10%, rgba(37, 99, 235, 0.16), transparent 40%),
+        radial-gradient(circle at 88% 12%, rgba(220, 38, 38, 0.14), transparent 38%),
+        radial-gradient(circle at 50% 90%, rgba(124, 58, 237, 0.14), transparent 46%),
+        #070b14;
+      background-attachment: fixed;
+      color: #f1f5f9;
+    }
     html.dark .card,
     html.dark aside,
     html.dark header,
     html.dark .modal-box {
-      background: #111827 !important;
-      border-color: #1f2937 !important;
+      background: rgba(15, 23, 42, 0.86) !important;
+      border-color: rgba(51, 65, 85, 0.75) !important;
+      box-shadow: 0 14px 36px -14px rgba(0, 0, 0, 0.55) !important;
+    }
+    html.dark .tool-card-interactive:hover {
+      border-color: rgba(248, 113, 113, 0.65) !important;
+      box-shadow: 0 22px 42px -14px rgba(239, 68, 68, 0.25) !important;
     }
     html.dark .bg-slate-50,
     html.dark .bg-slate-100 { background-color: #1e293b !important; }
@@ -93,6 +208,9 @@
   </style>
 </head>
 <body class="min-h-screen antialiased">
+  <!-- Top Scroll Progress Bar -->
+  <div id="scrollProgressBar"></div>
+
   <!-- Toast Container -->
   <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
@@ -122,19 +240,28 @@
       </div>
     </header>
 
-    <main class="max-w-4xl w-full mx-auto px-4 py-8 space-y-6 flex-1">
-      <div class="space-y-1">
-        <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">Home</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Choose a tool below to open it.</p>
+    <main class="max-w-4xl w-full mx-auto px-4 py-10 space-y-8 flex-1">
+      <!-- Polished Hero Header -->
+      <div class="reveal-item space-y-3 text-center sm:text-left">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200/80 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+          <span>Automation Workspace</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight hero-gradient-text leading-tight">
+          Smart Creator Tools
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto sm:mx-0">
+          Fast, clean browser-based automation tools. Pick a tool below to launch it instantly.
+        </p>
       </div>
 
       <!-- Tools Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <!-- Tool 1: YouTube Video Auto Share -->
-        <button id="openTelegramToolBtn" type="button" class="card group text-left rounded-3xl p-5 hover:border-red-400 hover:shadow-md transition flex flex-col justify-between gap-4 cursor-pointer">
-          <div class="space-y-3">
+        <button id="openTelegramToolBtn" type="button" class="reveal-item card tool-card-interactive group text-left rounded-3xl p-6 hover:border-red-300 flex flex-col justify-between gap-5 cursor-pointer">
+          <div class="space-y-4">
             <div class="flex items-center justify-between gap-2">
-              <div class="w-12 h-12 rounded-2xl bg-red-600 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+              <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-red-500 to-rose-600 text-white flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
               </div>
               <span id="homeTgStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
@@ -143,20 +270,20 @@
               </span>
             </div>
             <div>
-              <h3 class="text-base font-bold text-slate-900 group-hover:text-red-600 transition-colors">YouTube Video Auto Share</h3>
-              <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                Auto-share new YouTube videos, schedule messages, HD photos & links, or run an auto photo queue.
+              <h3 class="text-base font-extrabold text-slate-900 group-hover:text-red-600 transition-colors">YouTube Video Auto Share</h3>
+              <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                Auto-share new YouTube videos, schedule messages, HD photos &amp; links, or run an auto photo queue.
               </p>
             </div>
           </div>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs font-bold text-red-600">
+          <div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs font-bold text-red-600">
             <span>Open Tool</span>
-            <span class="group-hover:translate-x-0.5 transition-transform">→</span>
+            <span class="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </button>
 
         <!-- Future Tool Slot: Coming Soon Animated Card -->
-        <div class="relative overflow-hidden rounded-3xl border-2 border-dashed border-blue-200 p-5 flex flex-col items-center justify-center text-center gap-3 min-h-[200px] bg-slate-50/70">
+        <div class="reveal-item relative overflow-hidden rounded-3xl border-2 border-dashed border-blue-200/90 p-6 flex flex-col items-center justify-center text-center gap-3 min-h-[215px] bg-white/50 backdrop-blur-sm">
           <!-- Floating Rocket / Sparkle Icon -->
           <div class="coming-float w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shadow-xs">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -266,7 +393,7 @@
 
     <!-- ==================== TAB 1: SCHEDULE POST (MSG / PHOTO / LINK) ==================== -->
     <section id="panel-schedule" class="tab-panel space-y-5">
-      <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="reveal-item card rounded-3xl p-5 sm:p-6 space-y-4">
         <div class="flex items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">Schedule Post</h2>
@@ -354,7 +481,7 @@
               type="datetime-local"
               class="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <button id="addScheduledBtn" type="button" class="px-6 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition shadow-sm shrink-0">
+            <button id="addScheduledBtn" type="button" class="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold transition shadow-md shadow-blue-500/25 shrink-0">
               Schedule Post
             </button>
           </div>
@@ -371,7 +498,7 @@
       </div>
 
       <!-- Scheduled List Card -->
-      <div class="card rounded-3xl p-5 sm:p-6 space-y-3">
+      <div class="reveal-item card rounded-3xl p-5 sm:p-6 space-y-3">
         <div class="flex items-center justify-between gap-2">
           <h3 class="text-sm font-bold text-slate-900">Scheduled List (<span id="schedCount">0</span>)</h3>
           <button id="clearSentSchedBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">
@@ -388,7 +515,7 @@
 
     <!-- ==================== TAB 2: AUTO-POST PHOTOS (INTERVAL QUEUE) ==================== -->
     <section id="panel-photos" class="tab-panel hidden space-y-5">
-      <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="reveal-item card rounded-3xl p-5 sm:p-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">Auto-Post Photos</h2>
@@ -474,7 +601,7 @@
       </div>
 
       <!-- Queue List -->
-      <div class="card rounded-3xl p-5 sm:p-6 space-y-3">
+      <div class="reveal-item card rounded-3xl p-5 sm:p-6 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <h3 class="text-sm font-bold text-slate-900">Photo Queue (<span id="queueCount">0</span>)</h3>
           <div class="flex gap-2">
@@ -490,7 +617,7 @@
 
     <!-- ==================== TAB 3: YOUTUBE AUTO-SHARE ==================== -->
     <section id="panel-youtube" class="tab-panel hidden space-y-5">
-      <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="reveal-item card rounded-3xl p-5 sm:p-6 space-y-4">
         <div class="flex items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">YouTube Auto-Share</h2>
@@ -549,7 +676,7 @@
         <div id="ytAlertBanner" class="hidden rounded-2xl border border-amber-300 bg-amber-50 px-3.5 py-2.5 text-xs font-medium text-amber-900"></div>
 
         <div class="flex flex-wrap items-center gap-2.5 pt-1">
-          <button id="ytToggleBtn" type="button" class="px-6 py-2.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white text-sm font-bold transition shadow-sm">
+          <button id="ytToggleBtn" type="button" class="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white text-sm font-bold transition shadow-md shadow-red-500/25">
             Start YouTube Watch
           </button>
           <button id="ytTestBtn" type="button" class="px-4 py-2.5 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 text-sm font-semibold transition">
@@ -561,7 +688,7 @@
 
     <!-- ==================== TAB 4: BOT SETUP ==================== -->
     <section id="panel-setup" class="tab-panel hidden space-y-5">
-      <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="reveal-item card rounded-3xl p-5 sm:p-6 space-y-4">
         <div class="flex items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900">Telegram Bot Setup</h2>
@@ -782,7 +909,7 @@
           info: 'bg-slate-900 text-white'
         };
         const toast = document.createElement('div');
-        toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl shadow-lg text-xs font-semibold transition-opacity duration-300 ${colors[type] || colors.info}`;
+        toast.className = `animate-toast-in pointer-events-auto px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold transition-opacity duration-300 ${colors[type] || colors.info}`;
         toast.textContent = message;
         el.toastContainer.appendChild(toast);
         setTimeout(() => {
@@ -826,9 +953,17 @@
 
       function switchMainTab(tabName) {
         state.activeTab = tabName;
-        document.querySelectorAll('.tab-panel').forEach((p) => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-panel').forEach((p) => {
+          p.classList.add('hidden');
+          p.classList.remove('animate-view-enter');
+        });
         const panel = document.getElementById(`panel-${tabName}`);
-        if (panel) panel.classList.remove('hidden');
+        if (panel) {
+          panel.classList.remove('hidden');
+          void panel.offsetWidth;
+          panel.classList.add('animate-view-enter');
+          triggerRevealScan(panel);
+        }
 
         document.querySelectorAll('.main-tab').forEach((btn) => {
           const isActive = btn.getAttribute('data-tab') === tabName;
@@ -2133,16 +2268,82 @@
       }
 
       // ===================== VIEW ROUTER (HOME <-> TOOLS) =====================
+      // ===================== SCROLL REVEAL, PROGRESS & CLICK RIPPLE =====================
+      const scrollProgressBar = document.getElementById('scrollProgressBar');
+      function updateScrollProgress() {
+        if (!scrollProgressBar) return;
+        const doc = document.documentElement;
+        const scrollTop = window.scrollY || doc.scrollTop || 0;
+        const maxScroll = Math.max(0, doc.scrollHeight - window.innerHeight);
+        const pct = maxScroll > 0 ? Math.min(100, (scrollTop / maxScroll) * 100) : 0;
+        scrollProgressBar.style.width = `${pct}%`;
+      }
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      window.addEventListener('resize', updateScrollProgress, { passive: true });
+
+      let revealObserver = null;
+      if ('IntersectionObserver' in window) {
+        revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+      }
+
+      function triggerRevealScan(scopeEl) {
+        const root = scopeEl || document;
+        const items = root.querySelectorAll('.reveal-item');
+        items.forEach((item, idx) => {
+          item.style.transitionDelay = `${Math.min(idx * 65, 260)}ms`;
+          if (revealObserver) {
+            item.classList.remove('is-visible');
+            revealObserver.observe(item);
+          } else {
+            item.classList.add('is-visible');
+          }
+        });
+      }
+
+      // Click ripple on all buttons & interactive cards
+      document.addEventListener('pointerdown', (e) => {
+        const target = e.target.closest('button, .tool-card-interactive');
+        if (!target || target.disabled) return;
+        const rect = target.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 0.65;
+        const wave = document.createElement('span');
+        const isLightBtn = target.classList.contains('bg-white') || target.classList.contains('bg-slate-100') || target.classList.contains('card');
+        wave.className = isLightBtn ? 'ripple-wave ripple-wave-dark' : 'ripple-wave';
+        wave.style.width = `${size}px`;
+        wave.style.height = `${size}px`;
+        wave.style.left = `${e.clientX - rect.left - size / 2}px`;
+        wave.style.top = `${e.clientY - rect.top - size / 2}px`;
+        target.appendChild(wave);
+        setTimeout(() => wave.remove(), 580);
+      });
+
       function openHomeView() {
         el.viewTelegram.classList.add('hidden');
         el.viewHome.classList.remove('hidden');
+        el.viewHome.classList.remove('animate-view-enter');
+        void el.viewHome.offsetWidth;
+        el.viewHome.classList.add('animate-view-enter');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        triggerRevealScan(el.viewHome);
+        updateScrollProgress();
       }
 
       function openTelegramToolView() {
         el.viewHome.classList.add('hidden');
         el.viewTelegram.classList.remove('hidden');
+        el.viewTelegram.classList.remove('animate-view-enter');
+        void el.viewTelegram.offsetWidth;
+        el.viewTelegram.classList.add('animate-view-enter');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        triggerRevealScan(el.viewTelegram);
+        updateScrollProgress();
       }
 
       // ===================== LISTENERS =====================
@@ -2299,6 +2500,8 @@
       startScheduledTicker();
       refreshHeaderConnection();
       refreshLiveBar();
+      triggerRevealScan(el.viewHome);
+      updateScrollProgress();
     })();
   </script>
 </body>
