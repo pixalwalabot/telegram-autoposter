@@ -112,10 +112,15 @@
     html.dark input[type="password"],
     html.dark input[type="number"],
     html.dark input[type="url"],
+    html.dark input[type="datetime-local"],
+    html.dark select,
     html.dark textarea {
       background-color: #020617 !important;
       border-color: #334155 !important;
       color: #f8fafc !important;
+    }
+    html.dark .sched-quick-btn.bg-slate-100:hover {
+      background-color: #334155 !important;
     }
     html.dark input::placeholder,
     html.dark textarea::placeholder {
@@ -267,6 +272,16 @@
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
             </svg>
             <span>Dashboard</span>
+          </button>
+
+          <button id="navScheduleBtn" type="button" class="w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-2xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 text-xs font-semibold transition">
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Schedule Post</span>
+            </span>
+            <span id="navSchedBadge" class="hidden px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">0</span>
           </button>
 
           <button id="navSettingsBtn" type="button" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 text-xs font-semibold transition">
@@ -492,6 +507,7 @@
                   <div class="flex flex-wrap items-center gap-2">
                     <span id="countdownDisplay" class="font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full">Photo Next: --:--</span>
                     <span id="ytCountdownDisplay" class="font-bold text-red-700 bg-red-50 px-2.5 py-1 rounded-full">YT Next: --:--</span>
+                    <span id="schedCountdownDisplay" class="font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full">Scheduled: 0</span>
                   </div>
                   <span class="text-slate-500 font-sans font-semibold"><span id="progressStats">0 / 0 items posted</span> (<span id="progressPercent">0%</span>)</span>
                 </div>
@@ -797,6 +813,159 @@
               </div>
             </section>
 
+            <!-- Card 3B: Exact Date & Time Scheduled Post (Msg / Photo / Link) -->
+            <section id="scheduledPostsSection" class="pastel-card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-slate-900 leading-tight">Time-Based Schedule Post</h2>
+                    <p class="text-[11px] text-slate-500">Koi bhi Message, Photo ya Link exact date &amp; time par auto-send karein</p>
+                  </div>
+                </div>
+                <span id="schedStatusBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
+                  <span id="schedStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                  <span id="schedStatusText">No Pending</span>
+                </span>
+              </div>
+
+              <!-- Message / Caption -->
+              <div>
+                <label for="schedMsgInput" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Message / Photo Caption
+                </label>
+                <textarea
+                  id="schedMsgInput"
+                  rows="2"
+                  placeholder="Yahan apna message ya photo ka caption likhein..."
+                  class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                ></textarea>
+              </div>
+
+              <!-- Optional Link + Button -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div>
+                  <label for="schedLinkUrlInput" class="block text-xs font-semibold text-slate-700 mb-1">
+                    Link URL (Optional)
+                  </label>
+                  <input
+                    id="schedLinkUrlInput"
+                    type="url"
+                    placeholder="https://example.com ya https://t.me/..."
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+                <div>
+                  <label for="schedLinkTextInput" class="block text-xs font-semibold text-slate-700 mb-1">
+                    Link Button Text (Optional)
+                  </label>
+                  <input
+                    id="schedLinkTextInput"
+                    type="text"
+                    placeholder="e.g. Open Link / Watch Now"
+                    class="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+              </div>
+
+              <!-- Optional Photo (Device or Image URL) -->
+              <div class="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2.5">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-slate-800">Attach Photo (Optional)</span>
+                  <div class="flex items-center gap-2">
+                    <label for="schedPhotoModeSelect" class="text-[11px] font-semibold text-slate-500">Quality:</label>
+                    <select id="schedPhotoModeSelect" class="rounded-xl border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                      <option value="document">100% HD File</option>
+                      <option value="photo">Normal Photo</option>
+                      <option value="both">Dono (Photo + HD)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 items-center">
+                  <label class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-dashed border-purple-300 bg-white hover:bg-purple-50/60 text-purple-700 text-xs font-semibold cursor-pointer transition">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span id="schedFileLabel" class="truncate">Gallery se Photo chunein</span>
+                    <input id="schedFileInput" type="file" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.avif" class="sr-only" />
+                  </label>
+                  <input
+                    id="schedPhotoUrlInput"
+                    type="url"
+                    placeholder="Ya direct Image URL paste karein..."
+                    class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
+
+                <div id="schedPhotoPreviewWrap" class="hidden flex items-center justify-between gap-2 p-2 rounded-xl bg-white border border-slate-200">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <img id="schedPhotoPreviewImg" src="" alt="Selected photo preview" class="w-10 h-10 rounded-lg object-cover bg-slate-200 shrink-0" />
+                    <div class="min-w-0">
+                      <div id="schedPhotoPreviewName" class="text-xs font-semibold text-slate-800 truncate"></div>
+                      <div id="schedPhotoPreviewMeta" class="text-[10px] text-slate-500"></div>
+                    </div>
+                  </div>
+                  <button id="schedClearPhotoBtn" type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 transition shrink-0">
+                    Remove
+                  </button>
+                </div>
+              </div>
+
+              <!-- Exact Date & Time Picker -->
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <label for="schedDateTimeInput" class="text-xs font-semibold text-slate-700">
+                    Date &amp; Time chunein <span class="text-rose-500">*</span>
+                  </label>
+                  <span class="text-[11px] text-slate-500">Browser tab open rakhein — exact time par auto-send hoga</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2.5">
+                  <input
+                    id="schedDateTimeInput"
+                    type="datetime-local"
+                    class="flex-1 rounded-2xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <button id="addScheduledBtn" type="button" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs sm:text-sm font-bold hover:opacity-95 transition shadow-md shadow-purple-500/20 inline-flex items-center justify-center gap-2 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Schedule Post</span>
+                  </button>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button type="button" data-sched-min="1" class="sched-quick-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+1 min</button>
+                  <button type="button" data-sched-min="5" class="sched-quick-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+5 min</button>
+                  <button type="button" data-sched-min="15" class="sched-quick-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+15 min</button>
+                  <button type="button" data-sched-min="60" class="sched-quick-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">+1 hour</button>
+                  <button type="button" data-sched-tomorrow="9" class="sched-quick-btn px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Kal 9:00 AM</button>
+                </div>
+              </div>
+
+              <div id="schedAlertBanner" class="hidden rounded-2xl border border-amber-300 bg-amber-50 px-3.5 py-2 text-xs font-medium text-amber-900"></div>
+
+              <!-- Scheduled Items List -->
+              <div class="pt-3 border-t border-slate-200/70 space-y-2.5">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="text-xs font-bold text-slate-800">
+                    Scheduled Posts (<span id="schedCount">0</span>)
+                  </div>
+                  <button id="clearSentSchedBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">
+                    Clear Sent
+                  </button>
+                </div>
+                <div id="scheduledList" class="space-y-2.5 max-h-72 overflow-y-auto pr-1">
+                  <div class="text-center py-5 text-xs text-slate-400">
+                    Abhi koi post schedule nahi hai. Upar message/photo/link aur time set karke Schedule Post dabayein.
+                  </div>
+                </div>
+              </div>
+            </section>
+
             <!-- Card 4: YouTube New Video Auto-Share -->
             <section class="pastel-card rounded-3xl p-5 sm:p-6 space-y-4">
               <div class="flex flex-wrap items-center justify-between gap-2">
@@ -936,7 +1105,12 @@
         ytCountdownSeconds: 0,
         ytWatchStartedAt: 0,
         ytChecking: false,
-        ytPostedByChannel: {}
+        ytPostedByChannel: {},
+        scheduledPosts: [], // { id, text, linkUrl, linkLabel, photoType: 'none'|'file'|'url', file?, photoUrl?, previewUrl?, photoName?, photoMode, scheduledAt, status: 'pending'|'posting'|'sent'|'error'|'missed', errorMsg? }
+        schedPendingFile: null,
+        schedPendingPreviewUrl: '',
+        schedNextId: 1,
+        schedTickerId: null
       };
 
       // ===================== DOM REFS =====================
@@ -1013,7 +1187,33 @@
         ytStatusText: document.getElementById('ytStatusText'),
 
         activityLog: document.getElementById('activityLog'),
-        clearLogBtn: document.getElementById('clearLogBtn')
+        clearLogBtn: document.getElementById('clearLogBtn'),
+
+        navScheduleBtn: document.getElementById('navScheduleBtn'),
+        navSchedBadge: document.getElementById('navSchedBadge'),
+        scheduledPostsSection: document.getElementById('scheduledPostsSection'),
+        schedCountdownDisplay: document.getElementById('schedCountdownDisplay'),
+        schedStatusBadge: document.getElementById('schedStatusBadge'),
+        schedStatusDot: document.getElementById('schedStatusDot'),
+        schedStatusText: document.getElementById('schedStatusText'),
+        schedMsgInput: document.getElementById('schedMsgInput'),
+        schedLinkUrlInput: document.getElementById('schedLinkUrlInput'),
+        schedLinkTextInput: document.getElementById('schedLinkTextInput'),
+        schedPhotoModeSelect: document.getElementById('schedPhotoModeSelect'),
+        schedFileInput: document.getElementById('schedFileInput'),
+        schedFileLabel: document.getElementById('schedFileLabel'),
+        schedPhotoUrlInput: document.getElementById('schedPhotoUrlInput'),
+        schedPhotoPreviewWrap: document.getElementById('schedPhotoPreviewWrap'),
+        schedPhotoPreviewImg: document.getElementById('schedPhotoPreviewImg'),
+        schedPhotoPreviewName: document.getElementById('schedPhotoPreviewName'),
+        schedPhotoPreviewMeta: document.getElementById('schedPhotoPreviewMeta'),
+        schedClearPhotoBtn: document.getElementById('schedClearPhotoBtn'),
+        schedDateTimeInput: document.getElementById('schedDateTimeInput'),
+        addScheduledBtn: document.getElementById('addScheduledBtn'),
+        schedAlertBanner: document.getElementById('schedAlertBanner'),
+        schedCount: document.getElementById('schedCount'),
+        clearSentSchedBtn: document.getElementById('clearSentSchedBtn'),
+        scheduledList: document.getElementById('scheduledList')
       };
 
       // ===================== HELPERS =====================
@@ -2299,6 +2499,505 @@
         addLog('YouTube Auto-Watch band kar diya gaya.', 'warn');
       }
 
+      // ===================== TIME-BASED SCHEDULED POSTS =====================
+      function showSchedAlert(msg) {
+        if (!msg) {
+          el.schedAlertBanner.classList.add('hidden');
+          el.schedAlertBanner.textContent = '';
+          return;
+        }
+        el.schedAlertBanner.textContent = msg;
+        el.schedAlertBanner.classList.remove('hidden');
+      }
+
+      function toDateTimeLocalValue(dateObj) {
+        const d = new Date(dateObj);
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+
+      function formatScheduledTimestamp(ts) {
+        const d = new Date(ts);
+        return d.toLocaleString(undefined, {
+          day: '2-digit',
+          month: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        });
+      }
+
+      function formatRemainingHuman(ms) {
+        if (ms <= 0) return 'Sending now...';
+        const totalSec = Math.ceil(ms / 1000);
+        const days = Math.floor(totalSec / 86400);
+        const hrs = Math.floor((totalSec % 86400) / 3600);
+        const mins = Math.floor((totalSec % 3600) / 60);
+        const secs = totalSec % 60;
+        if (days > 0) return `in ${days}d ${hrs}h ${mins}m`;
+        if (hrs > 0) return `in ${hrs}h ${mins}m ${secs}s`;
+        if (mins > 0) return `in ${mins}m ${String(secs).padStart(2, '0')}s`;
+        return `in ${secs}s`;
+      }
+
+      function formatCompactCountdown(ms) {
+        const totalSec = Math.max(0, Math.ceil(ms / 1000));
+        const hrs = Math.floor(totalSec / 3600);
+        const mins = Math.floor((totalSec % 3600) / 60);
+        const secs = totalSec % 60;
+        if (hrs > 0) return `${hrs}h ${String(mins).padStart(2, '0')}m`;
+        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      function saveScheduledPostsToStorage() {
+        try {
+          const serializable = state.scheduledPosts.map((p) => ({
+            id: p.id,
+            text: p.text,
+            linkUrl: p.linkUrl,
+            linkLabel: p.linkLabel,
+            photoType: p.photoType === 'file' ? (p.dataUrl ? 'dataUrl' : 'file_lost') : p.photoType,
+            photoUrl: p.photoUrl || '',
+            dataUrl: p.dataUrl || '',
+            photoName: p.photoName || '',
+            photoMode: p.photoMode || 'document',
+            scheduledAt: p.scheduledAt,
+            status: p.status === 'posting' ? 'pending' : p.status,
+            errorMsg: p.errorMsg || ''
+          })).filter((p) => p.photoType !== 'file_lost');
+          localStorage.setItem('tg_scheduled_posts_v1', JSON.stringify(serializable));
+        } catch (e) {
+          // Storage quota exceeded (e.g. large image) — keep in memory for this session
+        }
+      }
+
+      function loadScheduledPostsFromStorage() {
+        try {
+          const raw = localStorage.getItem('tg_scheduled_posts_v1');
+          if (!raw) return;
+          const arr = JSON.parse(raw);
+          if (!Array.isArray(arr)) return;
+          const now = Date.now();
+          let maxId = 0;
+          state.scheduledPosts = arr.map((p) => {
+            if (p.id > maxId) maxId = p.id;
+            let status = p.status || 'pending';
+            // If a scheduled time passed while tab was closed, mark missed so user can Send Now or delete
+            if (status === 'pending' && p.scheduledAt < now - 60000) {
+              status = 'missed';
+            }
+            return {
+              id: p.id,
+              text: p.text || '',
+              linkUrl: p.linkUrl || '',
+              linkLabel: p.linkLabel || '',
+              photoType: p.photoType || 'none',
+              photoUrl: p.photoUrl || '',
+              dataUrl: p.dataUrl || '',
+              previewUrl: p.photoType === 'url' ? (p.photoUrl || '') : (p.dataUrl || ''),
+              photoName: p.photoName || 'photo.jpg',
+              photoMode: p.photoMode || 'document',
+              scheduledAt: p.scheduledAt,
+              status,
+              errorMsg: status === 'missed' ? 'Tab band hone ki wajah se time nikal gaya — "Send Now" se abhi bhej sakte hain.' : (p.errorMsg || '')
+            };
+          });
+          state.schedNextId = maxId + 1;
+        } catch (e) {}
+      }
+
+      function updateSchedComposerPreview() {
+        const file = state.schedPendingFile;
+        const urlVal = el.schedPhotoUrlInput.value.trim();
+        if (file) {
+          el.schedPhotoPreviewImg.src = state.schedPendingPreviewUrl;
+          el.schedPhotoPreviewName.textContent = file.name || 'Selected photo';
+          el.schedPhotoPreviewMeta.textContent = `Gallery File • ${formatBytes(file.size || 0)}`;
+          el.schedFileLabel.textContent = file.name || 'Photo selected';
+          el.schedPhotoPreviewWrap.classList.remove('hidden');
+        } else if (urlVal && (urlVal.startsWith('http://') || urlVal.startsWith('https://'))) {
+          el.schedPhotoPreviewImg.src = urlVal;
+          el.schedPhotoPreviewName.textContent = urlVal.split('?')[0].split('/').pop() || 'Image URL';
+          el.schedPhotoPreviewMeta.textContent = 'Direct Image URL';
+          el.schedFileLabel.textContent = 'Gallery se Photo chunein';
+          el.schedPhotoPreviewWrap.classList.remove('hidden');
+        } else {
+          el.schedPhotoPreviewWrap.classList.add('hidden');
+          el.schedPhotoPreviewImg.src = '';
+          el.schedFileLabel.textContent = 'Gallery se Photo chunein';
+        }
+      }
+
+      function clearSchedComposerPhoto() {
+        if (state.schedPendingPreviewUrl) {
+          URL.revokeObjectURL(state.schedPendingPreviewUrl);
+          state.schedPendingPreviewUrl = '';
+        }
+        state.schedPendingFile = null;
+        el.schedFileInput.value = '';
+        el.schedPhotoUrlInput.value = '';
+        updateSchedComposerPreview();
+      }
+
+      function updateScheduledHeaderStatus() {
+        const pending = state.scheduledPosts
+          .filter((p) => p.status === 'pending')
+          .sort((a, b) => a.scheduledAt - b.scheduledAt);
+        const count = pending.length;
+
+        if (el.navSchedBadge) {
+          if (count > 0) {
+            el.navSchedBadge.textContent = String(count);
+            el.navSchedBadge.classList.remove('hidden');
+          } else {
+            el.navSchedBadge.classList.add('hidden');
+          }
+        }
+
+        if (count > 0) {
+          const nextMs = Math.max(0, pending[0].scheduledAt - Date.now());
+          el.schedStatusBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700';
+          el.schedStatusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+          el.schedStatusText.textContent = `Active (${count} pending)`;
+          el.schedCountdownDisplay.textContent = `Sched Next: ${formatCompactCountdown(nextMs)}`;
+        } else {
+          el.schedStatusBadge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600';
+          el.schedStatusDot.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
+          el.schedStatusText.textContent = 'No Pending';
+          el.schedCountdownDisplay.textContent = 'Scheduled: 0';
+        }
+      }
+
+      function dataUrlToBlob(dataUrl) {
+        const parts = dataUrl.split(',');
+        const mimeMatch = parts[0].match(/:(.*?);/);
+        const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+        const bin = atob(parts[1]);
+        const arr = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+        return new Blob([arr], { type: mime });
+      }
+
+      async function sendScheduledPost(item) {
+        const creds = validateCredentials();
+        if (!creds) {
+          item.status = 'error';
+          item.errorMsg = 'Bot Token ya Channel ID missing hai — Step 1 me fill karein aur Retry dabayein.';
+          renderScheduledList();
+          saveScheduledPostsToStorage();
+          return false;
+        }
+
+        item.status = 'posting';
+        item.errorMsg = '';
+        renderScheduledList();
+
+        try {
+          const hasLink = item.linkUrl && (item.linkUrl.startsWith('http://') || item.linkUrl.startsWith('https://'));
+          const replyMarkup = hasLink
+            ? JSON.stringify({
+                inline_keyboard: [[{ text: item.linkLabel || 'Open Link', url: item.linkUrl }]]
+              })
+            : '';
+
+          const hasPhoto = item.photoType === 'file' || item.photoType === 'url' || item.photoType === 'dataUrl';
+
+          if (!hasPhoto) {
+            let msgText = (item.text || '').trim();
+            if (hasLink && !msgText.includes(item.linkUrl)) {
+              msgText = msgText ? `${msgText}
+
+${item.linkUrl}` : item.linkUrl;
+            }
+            const fd = new FormData();
+            fd.append('chat_id', creds.channel);
+            fd.append('text', msgText.slice(0, 4096));
+            if (replyMarkup) fd.append('reply_markup', replyMarkup);
+            addLog(`Scheduled Message bheja ja raha hai...`, 'info');
+            await callTelegramEndpoint(creds.token, 'sendMessage', fd);
+          } else {
+            const mode = item.photoMode || 'document';
+            const modesToRun = mode === 'both' ? ['photo', 'document'] : [mode];
+            let caption = (item.text || '').trim();
+            if (hasLink && !item.linkLabel && !caption.includes(item.linkUrl)) {
+              caption = caption ? `${caption}
+${item.linkUrl}` : item.linkUrl;
+            }
+            caption = caption.slice(0, 1024);
+
+            addLog(`Scheduled Photo (${mode}) bheji ja rahi hai: ${item.photoName || 'photo'}...`, 'info');
+            for (const currentMode of modesToRun) {
+              const endpoint = currentMode === 'document' ? 'sendDocument' : 'sendPhoto';
+              const field = currentMode === 'document' ? 'document' : 'photo';
+              const fd = new FormData();
+              fd.append('chat_id', creds.channel);
+
+              const useCaption = mode !== 'both' || currentMode === 'photo';
+              if (useCaption && caption) fd.append('caption', caption);
+              if (replyMarkup && (mode !== 'both' || currentMode === 'document')) {
+                fd.append('reply_markup', replyMarkup);
+              }
+
+              if (item.photoType === 'file' && item.file) {
+                fd.append(field, item.file, item.photoName || 'photo.jpg');
+              } else if (item.photoType === 'dataUrl' && item.dataUrl) {
+                fd.append(field, dataUrlToBlob(item.dataUrl), item.photoName || 'photo.jpg');
+              } else {
+                fd.append(field, item.photoUrl);
+              }
+
+              await callTelegramEndpoint(creds.token, endpoint, fd);
+            }
+          }
+
+          item.status = 'sent';
+          item.errorMsg = '';
+          renderScheduledList();
+          saveScheduledPostsToStorage();
+          addLog(`Scheduled Post successfully sent to ${creds.channel}!`, 'success');
+          showToast('Scheduled post time par channel me send ho gaya!', 'success');
+          return true;
+        } catch (err) {
+          item.status = 'error';
+          item.errorMsg = /Failed to fetch|NetworkError/i.test(err.message)
+            ? 'Network/CORS error — HTML file ko Chrome me open karein ya internet check karein.'
+            : err.message;
+          renderScheduledList();
+          saveScheduledPostsToStorage();
+          addLog(`Scheduled Post failed: ${item.errorMsg}`, 'error');
+          showToast(`Scheduled post failed: ${item.errorMsg}`, 'error');
+          return false;
+        }
+      }
+
+      function renderScheduledList() {
+        el.schedCount.textContent = String(state.scheduledPosts.length);
+        updateScheduledHeaderStatus();
+
+        if (state.scheduledPosts.length === 0) {
+          el.scheduledList.innerHTML = `
+            <div class="text-center py-5 text-xs text-slate-400">
+              Abhi koi post schedule nahi hai. Upar message/photo/link aur time set karke Schedule Post dabayein.
+            </div>`;
+          return;
+        }
+
+        const sorted = [...state.scheduledPosts].sort((a, b) => a.scheduledAt - b.scheduledAt);
+        el.scheduledList.innerHTML = '';
+
+        const badgeMap = {
+          pending: '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-100 text-purple-700">Scheduled</span>',
+          posting: '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-100 text-sky-700">Sending...</span>',
+          sent: '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 text-emerald-700">Sent</span>',
+          missed: '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-800">Missed</span>',
+          error: '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-rose-100 text-rose-700">Error</span>'
+        };
+
+        sorted.forEach((item) => {
+          const card = document.createElement('div');
+          card.className = 'flex items-start gap-3 p-3 rounded-2xl border border-slate-200 bg-slate-50/60';
+
+          const hasPhoto = item.photoType !== 'none' && item.previewUrl;
+          let thumb;
+          if (hasPhoto) {
+            thumb = document.createElement('img');
+            thumb.src = item.previewUrl;
+            thumb.alt = item.photoName || 'Scheduled photo';
+            thumb.className = 'w-12 h-12 rounded-xl object-cover bg-slate-200 shrink-0 border border-slate-200';
+            thumb.onerror = function () { this.style.display = 'none'; };
+          } else {
+            thumb = document.createElement('div');
+            thumb.className = 'w-12 h-12 rounded-xl bg-purple-50 text-purple-700 border border-purple-200/80 shrink-0 flex flex-col items-center justify-center text-[10px] font-extrabold';
+            thumb.innerHTML = item.linkUrl && !item.text
+              ? '<span>LINK</span>'
+              : `<span>MSG</span>${item.linkUrl ? '<span class="text-[9px] text-blue-600">+LINK</span>' : ''}`;
+          }
+
+          const body = document.createElement('div');
+          body.className = 'min-w-0 flex-1 space-y-1';
+
+          const topRow = document.createElement('div');
+          topRow.className = 'flex flex-wrap items-center justify-between gap-1.5';
+
+          const timeLabel = document.createElement('div');
+          timeLabel.className = 'text-xs font-bold text-slate-900 flex items-center gap-1.5 flex-wrap';
+          const timeText = document.createElement('span');
+          timeText.textContent = formatScheduledTimestamp(item.scheduledAt);
+          timeLabel.appendChild(timeText);
+
+          if (item.status === 'pending') {
+            const remSpan = document.createElement('span');
+            remSpan.setAttribute('data-sched-rem', String(item.id));
+            remSpan.className = 'text-[10px] font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full';
+            remSpan.textContent = formatRemainingHuman(item.scheduledAt - Date.now());
+            timeLabel.appendChild(remSpan);
+          }
+
+          const actions = document.createElement('div');
+          actions.className = 'flex items-center gap-1.5 shrink-0';
+          actions.innerHTML = badgeMap[item.status] || badgeMap.pending;
+
+          if (item.status === 'pending' || item.status === 'error' || item.status === 'missed') {
+            const sendNowBtn = document.createElement('button');
+            sendNowBtn.type = 'button';
+            sendNowBtn.className = 'px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition';
+            sendNowBtn.textContent = item.status === 'error' ? 'Retry' : 'Send Now';
+            sendNowBtn.addEventListener('click', () => sendScheduledPost(item));
+            actions.appendChild(sendNowBtn);
+          }
+
+          topRow.appendChild(timeLabel);
+          topRow.appendChild(actions);
+
+          const previewText = document.createElement('div');
+          previewText.className = 'text-xs text-slate-700 line-clamp-2 break-words';
+          const tags = [];
+          if (item.photoType !== 'none') tags.push(`[Photo: ${item.photoName || 'Image'}]`);
+          if (item.text) tags.push(item.text);
+          if (item.linkUrl) tags.push(item.linkLabel ? `[Btn: ${item.linkLabel} -> ${item.linkUrl}]` : item.linkUrl);
+          previewText.textContent = tags.join(' • ');
+
+          body.appendChild(topRow);
+          body.appendChild(previewText);
+
+          if (item.errorMsg) {
+            const errEl = document.createElement('div');
+            errEl.className = 'text-[10px] text-rose-600 break-words';
+            errEl.textContent = item.errorMsg;
+            body.appendChild(errEl);
+          }
+
+          const removeBtn = document.createElement('button');
+          removeBtn.type = 'button';
+          removeBtn.className = 'p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition shrink-0';
+          removeBtn.setAttribute('aria-label', 'Delete scheduled post');
+          removeBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>';
+          removeBtn.addEventListener('click', () => {
+            if (item.photoType === 'file' && item.previewUrl) {
+              URL.revokeObjectURL(item.previewUrl);
+            }
+            state.scheduledPosts = state.scheduledPosts.filter((p) => p.id !== item.id);
+            renderScheduledList();
+            saveScheduledPostsToStorage();
+          });
+
+          card.appendChild(thumb);
+          card.appendChild(body);
+          card.appendChild(removeBtn);
+          el.scheduledList.appendChild(card);
+        });
+      }
+
+      function addScheduledPost() {
+        showSchedAlert('');
+        const text = el.schedMsgInput.value.trim();
+        const linkUrl = el.schedLinkUrlInput.value.trim();
+        const linkLabel = el.schedLinkTextInput.value.trim();
+        const photoUrl = el.schedPhotoUrlInput.value.trim();
+        const file = state.schedPendingFile;
+        const dtRaw = el.schedDateTimeInput.value;
+
+        if (!text && !linkUrl && !file && !photoUrl) {
+          const msg = 'Kam se kam koi Message, Photo ya Link daalein.';
+          showSchedAlert(msg);
+          showToast(msg, 'error');
+          return;
+        }
+        if (linkUrl && !linkUrl.startsWith('http://') && !linkUrl.startsWith('https://')) {
+          const msg = 'Link URL https:// ya http:// se shuru hona chahiye.';
+          showSchedAlert(msg);
+          showToast(msg, 'error');
+          return;
+        }
+        if (!file && photoUrl && !photoUrl.startsWith('http://') && !photoUrl.startsWith('https://')) {
+          const msg = 'Image URL https:// ya http:// se shuru hona chahiye.';
+          showSchedAlert(msg);
+          showToast(msg, 'error');
+          return;
+        }
+        if (!dtRaw) {
+          const msg = 'Post bhejne ka Date aur Time select karein.';
+          showSchedAlert(msg);
+          showToast(msg, 'error');
+          el.schedDateTimeInput.focus();
+          return;
+        }
+        const scheduledAt = new Date(dtRaw).getTime();
+        if (isNaN(scheduledAt) || scheduledAt <= Date.now() - 5000) {
+          const msg = 'Aane wala (future) time select karein — purana time select nahi ho sakta.';
+          showSchedAlert(msg);
+          showToast(msg, 'error');
+          return;
+        }
+
+        const item = {
+          id: state.schedNextId++,
+          text,
+          linkUrl,
+          linkLabel,
+          photoType: file ? 'file' : (photoUrl ? 'url' : 'none'),
+          file: file || null,
+          photoUrl: file ? '' : photoUrl,
+          dataUrl: '',
+          previewUrl: file ? state.schedPendingPreviewUrl : photoUrl,
+          photoName: file ? (file.name || 'photo.jpg') : (photoUrl ? (photoUrl.split('?')[0].split('/').pop() || 'photo.jpg') : ''),
+          photoMode: el.schedPhotoModeSelect.value || 'document',
+          scheduledAt,
+          status: 'pending',
+          errorMsg: ''
+        };
+
+        // If local file is small (<= 1.2MB), also cache base64 so it survives page refresh
+        if (file && file.size <= 1.2 * 1024 * 1024) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            item.dataUrl = typeof reader.result === 'string' ? reader.result : '';
+            saveScheduledPostsToStorage();
+          };
+          reader.readAsDataURL(file);
+        }
+
+        // Transfer ownership of previewUrl to the scheduled item
+        state.schedPendingFile = null;
+        state.schedPendingPreviewUrl = '';
+        el.schedFileInput.value = '';
+        el.schedMsgInput.value = '';
+        el.schedLinkUrlInput.value = '';
+        el.schedLinkTextInput.value = '';
+        el.schedPhotoUrlInput.value = '';
+        updateSchedComposerPreview();
+
+        state.scheduledPosts.push(item);
+        renderScheduledList();
+        saveScheduledPostsToStorage();
+
+        addLog(`Scheduled post added for ${formatScheduledTimestamp(scheduledAt)}.`, 'success');
+        showToast(`Post schedule ho gaya: ${formatScheduledTimestamp(scheduledAt)}`, 'success');
+      }
+
+      function startScheduledTicker() {
+        if (state.schedTickerId) clearInterval(state.schedTickerId);
+        state.schedTickerId = setInterval(() => {
+          const now = Date.now();
+          let anyDue = false;
+          state.scheduledPosts.forEach((item) => {
+            if (item.status !== 'pending') return;
+            const remMs = item.scheduledAt - now;
+            const badgeEl = el.scheduledList.querySelector(`[data-sched-rem="${item.id}"]`);
+            if (badgeEl) {
+              badgeEl.textContent = formatRemainingHuman(remMs);
+            }
+            if (remMs <= 0) {
+              anyDue = true;
+              sendScheduledPost(item);
+            }
+          });
+          if (!anyDue) {
+            updateScheduledHeaderStatus();
+          }
+        }, 1000);
+      }
+
       // ===================== STORAGE =====================
       function saveConfig() {
         try {
@@ -2647,10 +3346,79 @@
         }
       });
 
+      // ===================== SCHEDULED POSTS LISTENERS =====================
+      if (el.navScheduleBtn) {
+        el.navScheduleBtn.addEventListener('click', () => {
+          closeMobileSidebar();
+          if (el.scheduledPostsSection) {
+            el.scheduledPostsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+
+      el.schedFileInput.addEventListener('change', (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        if (!isImageFile(f)) {
+          showToast('Sirf image file (JPG, PNG, WEBP, HEIC) select karein.', 'error');
+          e.target.value = '';
+          return;
+        }
+        if (state.schedPendingPreviewUrl) URL.revokeObjectURL(state.schedPendingPreviewUrl);
+        state.schedPendingFile = f;
+        state.schedPendingPreviewUrl = URL.createObjectURL(f);
+        el.schedPhotoUrlInput.value = '';
+        updateSchedComposerPreview();
+      });
+
+      el.schedPhotoUrlInput.addEventListener('input', () => {
+        if (el.schedPhotoUrlInput.value.trim() && state.schedPendingFile) {
+          if (state.schedPendingPreviewUrl) URL.revokeObjectURL(state.schedPendingPreviewUrl);
+          state.schedPendingFile = null;
+          state.schedPendingPreviewUrl = '';
+          el.schedFileInput.value = '';
+        }
+        updateSchedComposerPreview();
+      });
+
+      el.schedClearPhotoBtn.addEventListener('click', clearSchedComposerPhoto);
+      el.addScheduledBtn.addEventListener('click', addScheduledPost);
+
+      document.querySelectorAll('.sched-quick-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const mins = btn.getAttribute('data-sched-min');
+          const tmrHour = btn.getAttribute('data-sched-tomorrow');
+          let target;
+          if (mins) {
+            target = new Date(Date.now() + parseInt(mins, 10) * 60 * 1000);
+          } else if (tmrHour) {
+            target = new Date();
+            target.setDate(target.getDate() + 1);
+            target.setHours(parseInt(tmrHour, 10), 0, 0, 0);
+          }
+          if (target) {
+            el.schedDateTimeInput.value = toDateTimeLocalValue(target);
+            showSchedAlert('');
+          }
+        });
+      });
+
+      el.clearSentSchedBtn.addEventListener('click', () => {
+        const before = state.scheduledPosts.length;
+        state.scheduledPosts = state.scheduledPosts.filter((p) => p.status !== 'sent');
+        if (state.scheduledPosts.length !== before) {
+          renderScheduledList();
+          saveScheduledPostsToStorage();
+          addLog('Sent scheduled posts list se saaf kar diye gaye.', 'info');
+        }
+      });
+
       // ===================== INIT =====================
       loadTheme();
       loadConfig();
       loadYtPostedIds();
+      loadScheduledPostsFromStorage();
+      el.schedDateTimeInput.value = toDateTimeLocalValue(new Date(Date.now() + 5 * 60 * 1000));
       updateIntervalUI();
       updateYtIntervalUI();
       updateQualityCardsUI();
@@ -2660,6 +3428,8 @@
 
       updateRunModeUI();
       renderQueue();
+      renderScheduledList();
+      startScheduledTicker();
       refreshIdleStatus();
     })();
   </script>
